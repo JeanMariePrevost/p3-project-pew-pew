@@ -1,0 +1,27 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Constants
+INTERNAL_WIDTH, INTERNAL_HEIGHT = 700, 800
+BG_COLOR = (0, 0, 0)
+
+# Set up the display
+screen = pygame.display.set_mode((INTERNAL_WIDTH, INTERNAL_HEIGHT))
+pygame.display.set_caption("P3 - Project Pew Pew")
+
+# Main game loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    screen.fill(BG_COLOR)  # Fill the background
+    pygame.display.flip()  # Update the display
+
+# Game loop has ended, quit Pygame
+pygame.quit()
+sys.exit()
