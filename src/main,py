@@ -1,5 +1,6 @@
 import pygame
 import sys
+from game.player_ship import PlayerShip
 
 # Initialize Pygame
 pygame.init()
@@ -12,14 +13,22 @@ BG_COLOR = (0, 0, 0)
 screen = pygame.display.set_mode((INTERNAL_WIDTH, INTERNAL_HEIGHT))
 pygame.display.set_caption("P3 - Project Pew Pew")
 
+# player ship
+player_ship = PlayerShip()
+
 # Main game loop
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        
 
     screen.fill(BG_COLOR)  # Fill the background
+    
+    player_ship.tick()
+    player_ship.draw(screen)
+    
     pygame.display.flip()  # Update the display
 
 # Game loop has ended, quit Pygame
