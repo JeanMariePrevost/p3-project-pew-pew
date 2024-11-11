@@ -64,5 +64,4 @@ class PlayerShip:
             self.y += self.speed
 
     def draw(self, screen):
-        # Draw the spaceship on the given screen
         screen.blit(self.image, self.rect)

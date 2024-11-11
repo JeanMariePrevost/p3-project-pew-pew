@@ -12,6 +12,7 @@ make dependencies available to all other modules without having to pass them aro
 
 import pygame
 
+from game.enemy_manager import EnemyManager
 from game.projectile_manager import ProjectileManager
 
 
@@ -64,7 +65,12 @@ def event_occured_this_tick(event_type):
 
 
 __projectile_manager = ProjectileManager()
+__enemy_manager = EnemyManager()
 
 
 def get_projectile_manager():
     return __projectile_manager
+
+
+def get_enemy_manager():
+    return __enemy_manager
