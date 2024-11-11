@@ -1,11 +1,13 @@
 import os
 import pygame
-from global_services import get_screen
+from global_services import get_screen, event_occured_this_tick
 
 
 class PlayerShip:
     speed = 7.5  # Speed of the player ship
     x, y = 0, 0  # Needed because rect use integers only, think subpixels on the NES
+
+    using_mouse_controls = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
 
     def __init__(self):
         # Load the spaceship image from assets
@@ -13,9 +15,36 @@ class PlayerShip:
         self.rect = self.image.get_rect()
 
     def tick(self):
+        global using_mouse_controls
+        if event_occured_this_tick(pygame.MOUSEMOTION) or event_occured_this_tick(pygame.MOUSEBUTTONDOWN):
+            self.using_mouse_controls = True
+        elif event_occured_this_tick(pygame.KEYDOWN):
+            self.using_mouse_controls = False
+
+        if self.using_mouse_controls:
+            self.calculate_position_using_mouse_controls()
+        else:
+            self.calculate_position_using_keyboard_controls()
+
+        # Update the position of the ship
+        self.rect.center = self.x, self.y
+
+        # Restrict ship position to screen bounds
+        screen_rect = get_screen().get_rect()
+        self.rect.clamp_ip(screen_rect)
+
+        # HACK: prevent self.x and self.y from drifting too far outside the screen, since they aren't clamped but the rect is
+        center_x, center_y = self.rect.center  # Unpack rect.center
+        if abs(self.x - center_x) > 1.5:
+            self.x = center_x
+        if abs(self.y - center_y) > 1.5:
+            self.y = center_y
+
+    def calculate_position_using_mouse_controls(self):
         # Set position based on mouse cursor
         self.x, self.y = pygame.mouse.get_pos()
 
+    def calculate_position_using_keyboard_controls(self):
         # Get the current state of all keyboard keys
         keys = pygame.key.get_pressed()
 
@@ -28,19 +57,6 @@ class PlayerShip:
             self.y -= self.speed
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.y += self.speed
-
-        # Update the position of the ship
-        self.rect.center = self.x, self.y
-
-        # Restrict ship position to screen bounds
-        screen_rect = get_screen().get_rect()
-        self.rect.clamp_ip(screen_rect)
-
-        # HACK: prevent self.x and self.y from drifting too far outside the screen, since they aren't clamped but the rect is
-        if abs(self.x - self.rect.x) > 1.5:
-            self.x = self.rect.x
-        if abs(self.y - self.rect.y) > 1.5:
-            self.y = self.rect.y
 
     def draw(self, screen):
         # Draw the spaceship on the given screen

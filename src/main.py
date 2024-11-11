@@ -1,12 +1,10 @@
 import pygame
 import sys
-import typing
-from game.player_ship import PlayerShip
-from global_services import get_screen, BG_COLOR, clock_tick
+from global_services import event_occured_this_tick, get_screen, BG_COLOR, clock_tick, update_events_for_current_tick
 from scenes.base_scene import BaseScene
 from scenes.main_game_scene import MainGameScene
 
-current_scene = None
+current_scene: BaseScene = None
 
 
 def initial_setup():
@@ -18,9 +16,10 @@ def run_core_game_loop():
     """Main game loop for the entire application"""
     running = True
     while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        update_events_for_current_tick(pygame.event.get())
+        if event_occured_this_tick(pygame.QUIT):
+            print("Quit event detected, exiting game loop")
+            running = False
 
         if current_scene is not None:
             current_scene.tick()
@@ -30,6 +29,7 @@ def run_core_game_loop():
         clock_tick()  # Cap the frame rate, sleep until it's time for the next frame
 
     # Game loop has been exited, quit Pygame
+    print("Core loop exited, quitting Pygame")
     pygame.quit()
     sys.exit()
 
