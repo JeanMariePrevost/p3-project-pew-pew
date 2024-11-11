@@ -1,5 +1,6 @@
 import os
 import pygame
+from game.player_weapon_regular import PlayerWeaponRegular
 from global_services import get_screen, event_occured_this_tick
 
 
@@ -8,6 +9,8 @@ class PlayerShip:
     x, y = 0, 0  # Needed because rect use integers only, think subpixels on the NES
 
     using_mouse_controls = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
+
+    weapon = PlayerWeaponRegular()
 
     def __init__(self):
         # Load the spaceship image from assets
@@ -39,6 +42,9 @@ class PlayerShip:
             self.x = center_x
         if abs(self.y - center_y) > 1.5:
             self.y = center_y
+
+        # Weapon logic
+        self.weapon.tick()
 
     def calculate_position_using_mouse_controls(self):
         # Set position based on mouse cursor
