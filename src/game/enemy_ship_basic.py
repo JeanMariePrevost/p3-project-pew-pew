@@ -1,23 +1,30 @@
 import os
 import pygame
 
+from game.player_projectile_regular import PlayerProjectileRegular
 from global_services import get_enemy_manager, get_screen
+import random
 
 
 class EnemyShipBasic:
 
     def __init__(self):
-        self.speed: float = 3
-        self.x: float = 0
-        self.y: float = 50
         # Load the spaceship image from assets
         self.image = pygame.image.load(os.path.join("assets", "enemyBlack2.png"))
         self.rect = self.image.get_rect()
 
+        self.speed: float = random.choice([-2.5, 2.5])
+        self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)
+        self.y: float = random.uniform(self.rect.height / 2, get_screen().get_rect().height / 3)
+
+        self.seconds_between_shots_min = 2
+        self.seconds_between_shots_max = 12
+        self.set_time_for_next_shot()
+
         get_enemy_manager().add_enemy(self)
 
     def tick(self):
-        # TODO
+        # Movement logic
         self.x += self.speed
         self.rect.center = self.x, self.y
         # if enemy hits the right bounds, flip its speed
@@ -25,6 +32,20 @@ class EnemyShipBasic:
             self.speed = -self.speed
         elif self.speed < 0 and self.rect.left <= get_screen().get_rect().left:
             self.speed = -self.speed
+
+        # Shooting logic
+        # Fire if next shot ready
+        if pygame.time.get_ticks() >= self.time_for_next_shot:
+            self.fire()
+            self.set_time_for_next_shot()
+
+    def set_time_for_next_shot(self):
+        delay_in_ms = random.uniform(self.seconds_between_shots_min, self.seconds_between_shots_max) * 1000
+        self.time_for_next_shot = pygame.time.get_ticks() + delay_in_ms
+
+    def fire(self):
+        # DEBUG: testing with a player bullet for now
+        PlayerProjectileRegular(self.x, self.y, 90)
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)

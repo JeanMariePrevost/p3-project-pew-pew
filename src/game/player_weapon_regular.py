@@ -10,8 +10,8 @@ class PlayerWeaponBasic:
     """
 
     def __init__(self) -> None:
-        self.rate_of_fire = 0.5  # How many seconds between shots
-        self.last_fire_time = 0  # Time of the last shot
+        self.seconds_betwen_shots = 0.5
+        self.time_at_last_shot = 0
         self.sound = pygame.mixer.Sound("assets/Laser_shoot 80_low_quiet.wav")
 
     def tick(self, player_x, player_y):
@@ -28,11 +28,11 @@ class PlayerWeaponBasic:
         if self.weapon_on_cooldown():
             return
         else:
-            self.last_fire_time = pygame.time.get_ticks()
+            self.time_at_last_shot = pygame.time.get_ticks()
             # play the sound
             self.sound.play()
             PlayerProjectileRegular(player_x, player_y, -90)
         pass
 
     def weapon_on_cooldown(self) -> bool:
-        return pygame.time.get_ticks() - self.last_fire_time < self.rate_of_fire * 1000
+        return pygame.time.get_ticks() - self.time_at_last_shot < self.seconds_betwen_shots * 1000

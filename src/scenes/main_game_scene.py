@@ -17,7 +17,8 @@ class MainGameScene(BaseScene):
         self.player_ship = PlayerShip()
 
         # TODO: Move enemies to "waves" or "levels" objects which set up the whole swarm
-        self.temporary_enemy = EnemyShipBasic()
+        for _ in range(10):
+            EnemyShipBasic()
 
     def tick(self):
         # Core game loop
