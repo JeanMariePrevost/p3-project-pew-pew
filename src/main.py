@@ -1,7 +1,7 @@
 import pygame
 import sys
 from game.player_ship import PlayerShip
-from global_services import get_screen, BG_COLOR
+from global_services import get_screen, BG_COLOR, clock_tick
 
 # Initialize Pygame
 pygame.init()
@@ -23,6 +23,7 @@ while running:
     player_ship.draw(screen)
 
     pygame.display.flip()  # Update the display
+    clock_tick()  # Cap the frame rate
 
 # Game loop has ended, quit Pygame
 pygame.quit()

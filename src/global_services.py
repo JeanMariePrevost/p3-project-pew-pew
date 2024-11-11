@@ -16,12 +16,21 @@ import pygame
 # Constants
 INTERNAL_WIDTH, INTERNAL_HEIGHT = 700, 800
 BG_COLOR = (0, 0, 0)
+FPS_CAP = 60
 
 # Set up the display
 __screen = pygame.display.set_mode((INTERNAL_WIDTH, INTERNAL_HEIGHT))
 pygame.display.set_caption("P3 - Project Pew Pew")
 
+# Set up the clock
+__clock = pygame.time.Clock()
+
 
 def get_screen():
     """Return the main display surface."""
     return __screen
+
+
+def clock_tick():
+    """Stops the game clock until enough time has passed to not exceed the desired FPS."""
+    return __clock.tick(FPS_CAP)
