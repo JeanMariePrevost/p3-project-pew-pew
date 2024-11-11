@@ -14,24 +14,23 @@ class PlayerShip:
 
     def tick(self):
         # Set position based on mouse cursor
-        # self.rect.center = pygame.mouse.get_pos()
+        self.x, self.y = pygame.mouse.get_pos()
 
         # Get the current state of all keyboard keys
         keys = pygame.key.get_pressed()
 
         # Move the ship based on arrow key input
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.x -= self.speed
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.x += self.speed
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
             self.y -= self.speed
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.y += self.speed
 
         # Update the position of the ship
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.center = self.x, self.y
 
         # Restrict ship position to screen bounds
         screen_rect = get_screen().get_rect()
