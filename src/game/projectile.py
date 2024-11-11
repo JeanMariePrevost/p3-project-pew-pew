@@ -25,8 +25,6 @@ class Projectile:
         get_projectile_manager().add_projectile(self)
 
     def tick(self):
-        # DEBUG : Print current number of projectiles
-        print(f"Number of projectiles: {len(get_projectile_manager().projectiles)}")
         # Default behavior, move in a straight line at constant speed
         self.x += self.speed * math.cos(self.direction_in_radians)
         self.y += self.speed * math.sin(self.direction_in_radians)
