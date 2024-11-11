@@ -1,18 +1,17 @@
 import os
 import pygame
-from game.player_weapon_regular import PlayerWeaponRegular
+from game.player_weapon_regular import PlayerWeaponBasic
 from global_services import get_screen, event_occured_this_tick
 
 
 class PlayerShip:
-    speed = 7.5  # Speed of the player ship
-    x, y = 0, 0  # Needed because rect use integers only, think subpixels on the NES
-
-    using_mouse_controls = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
-
-    weapon = PlayerWeaponRegular()
 
     def __init__(self):
+        self.speed: float = 7.5  # Speed of the player ship
+        self.x: float = 0  # Needed because rect use integers only, think subpixels on the NES
+        self.y: float = 0
+        self.using_mouse_controls: bool = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
+        self.weapon: PlayerWeaponBasic = PlayerWeaponBasic()
         # Load the spaceship image from assets
         self.image = pygame.image.load(os.path.join("assets", "playerShip1_blue.png"))
         self.rect = self.image.get_rect()

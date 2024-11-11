@@ -1,13 +1,15 @@
 import pygame
 
 
-class PlayerWeaponRegular:
+class PlayerWeaponBasic:
     """
     Handles the firing of projectiles for the player.
     """
 
-    rate_of_fire = 0.5  # How many seconds between shots
-    last_fire_time = 0  # Time of the last shot
+    def __init__(self) -> None:
+        self.rate_of_fire = 0.5  # How many seconds between shots
+        self.last_fire_time = 0  # Time of the last shot
+        self.sound = pygame.mixer.Sound("assets/Laser_shoot 80_low_quiet.wav")
 
     def tick(self):
         # Check if the spacebar or LMB are currently pressed
@@ -24,7 +26,8 @@ class PlayerWeaponRegular:
             return
         else:
             self.last_fire_time = pygame.time.get_ticks()
-            print("Pew pew!")
+            # play the sound
+            self.sound.play()
         pass
 
     def weapon_on_cooldown(self) -> bool:

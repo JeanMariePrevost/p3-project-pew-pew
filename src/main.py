@@ -8,8 +8,11 @@ current_scene: BaseScene = None
 
 
 def initial_setup():
+    print("Initial setup")
     pygame.init()
+    pygame.mixer.init()
     change_scene(MainGameScene())
+    print("Initial setup complete")
 
 
 def run_core_game_loop():
