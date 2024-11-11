@@ -12,6 +12,8 @@ make dependencies available to all other modules without having to pass them aro
 
 import pygame
 
+from game.projectile_manager import ProjectileManager
+
 
 # Constants
 INTERNAL_WIDTH, INTERNAL_HEIGHT = 700, 800
@@ -56,3 +58,13 @@ def event_occured_this_tick(event_type):
     """
     global __current_tick_events
     return any(event.type == event_type for event in __current_tick_events)
+
+
+# Specific to the main game scene
+
+
+__projectile_manager = ProjectileManager()
+
+
+def get_projectile_manager():
+    return __projectile_manager

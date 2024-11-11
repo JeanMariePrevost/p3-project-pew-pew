@@ -43,7 +43,7 @@ class PlayerShip:
             self.y = center_y
 
         # Weapon logic
-        self.weapon.tick()
+        self.weapon.tick(self.x, self.y)
 
     def calculate_position_using_mouse_controls(self):
         # Set position based on mouse cursor

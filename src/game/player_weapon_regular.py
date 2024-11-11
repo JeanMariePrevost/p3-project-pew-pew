@@ -1,5 +1,8 @@
 import pygame
 
+from game.player_projectile_regular import PlayerProjectileRegular
+from global_services import get_screen
+
 
 class PlayerWeaponBasic:
     """
@@ -11,14 +14,14 @@ class PlayerWeaponBasic:
         self.last_fire_time = 0  # Time of the last shot
         self.sound = pygame.mixer.Sound("assets/Laser_shoot 80_low_quiet.wav")
 
-    def tick(self):
+    def tick(self, player_x, player_y):
         # Check if the spacebar or LMB are currently pressed
         keys = pygame.key.get_pressed()
         mouse_buttons = pygame.mouse.get_pressed()
         if keys[pygame.K_SPACE] or mouse_buttons[0]:
-            self.run_firing_logic()
+            self.run_firing_logic(player_x, player_y)
 
-    def run_firing_logic(self):
+    def run_firing_logic(self, player_x, player_y):
         """
         Fire a projectile from the player's ship.
         """
@@ -28,6 +31,7 @@ class PlayerWeaponBasic:
             self.last_fire_time = pygame.time.get_ticks()
             # play the sound
             self.sound.play()
+            PlayerProjectileRegular(player_x, player_y, -90)
         pass
 
     def weapon_on_cooldown(self) -> bool:
