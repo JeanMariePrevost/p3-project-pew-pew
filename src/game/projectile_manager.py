@@ -16,6 +16,9 @@ class ProjectileManager:
     def add_projectile(self, shot):
         self.projectiles.append(shot)
 
+    def remove_projectile(self, shot):
+        self.projectiles.remove(shot)
+
     def tick(self):
         for shot in self.projectiles:
             shot.tick()
