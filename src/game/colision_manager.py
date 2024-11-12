@@ -1,4 +1,5 @@
 from game.collision_type_set import CollisionType
+from renderable_flash_wrapper import RenderableFlashWrapper
 
 COLLISION_TOLERANCE = 12  # Define minimum number of pixels to count as a collision, letting "graze" shots not count
 
@@ -34,7 +35,7 @@ class CollisionManager:
                 if self.check_collision_using_masks(projectile, get_player()):
                     projectile.destroy()
                     print("Player hit!")
-                    get_player().flash((255, 0, 0), 0.4, 12)
+                    RenderableFlashWrapper(get_player().renderable, (255, 0, 0), 0.4, 12)
                     # TODO: Implement player taking damage
 
     def check_collision_using_masks(self, object1, object2) -> bool:

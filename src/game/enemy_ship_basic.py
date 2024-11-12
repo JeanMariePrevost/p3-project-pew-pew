@@ -7,6 +7,8 @@ import global_events
 from global_services import get_enemy_manager, get_screen
 import random
 
+from renderable_flash_wrapper import RenderableFlashWrapper
+
 
 class EnemyShipBasic(DamageableGameObject):
 
@@ -14,18 +16,22 @@ class EnemyShipBasic(DamageableGameObject):
         # Load the spaceship image from assets
         super().__init__(image_asset_path)
 
+        # Set randomized starting position and speed
         self.speed: float = random.choice([-2.5, 2.5])
         self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)
         self.y: float = random.uniform(self.rect.height / 2, get_screen().get_rect().height / 3)
 
+        # Unit stats
         self.health = 3
         self.seconds_between_shots_min = 2
         self.seconds_between_shots_max = 12
         self.set_time_for_next_shot()
 
+        # Sound effect
         self.sound = pygame.mixer.Sound("assets/Laser_shoot 123.wav")
         self.sound.set_volume(2)
 
+        # Register with the enemy manager
         get_enemy_manager().add_enemy(self)
 
     def tick(self):
@@ -53,7 +59,7 @@ class EnemyShipBasic(DamageableGameObject):
         self.sound.play()
 
     def take_damage(self, amount):
-        self.flash((255, 0, 0), 0.5, 9)
+        RenderableFlashWrapper(self.renderable, (255, 99, 99), 0.45, 9)
         return super().take_damage(amount)
 
     def on_health_depleted(self):

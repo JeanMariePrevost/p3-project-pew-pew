@@ -10,29 +10,18 @@ class GameObject:
     """
 
     def __init__(self, image_asset_path):
-        self.sprite = Renderable(image_asset_path)
-        self.rect = self.sprite.get_rect()
-        self.hit_mask = self.sprite.get_collision_mask()
-
-        # self.flash_color = None
-        # self.flash_ticks_duration = 0
-        # self.flash_ticks_remaining = 0
+        self.renderable = Renderable(image_asset_path)
+        self.rect = self.renderable.get_rect()
+        self.hit_mask = self.renderable.get_collision_mask()
 
     def tick(self):
         # No default behavior
         pass
 
     def set_scale(self, scale):
-        self.sprite.set_scale(scale)
+        self.renderable.set_scale(scale)
+        self.hit_mask = self.renderable.get_collision_mask()
         # TODO: Need to update the reference to the rect and hit mask? Test it out.
 
     def draw(self, screen):
-        screen.blit(self.sprite.get_final_image(), self.rect)
-
-    def flash(self, color_rgb, alpha, duration_ticks):
-        """Makes the object flash a color for a certain number of ticks"""
-        self.flash_color = color_rgb
-        self.flash_alpha = alpha
-        self.flash_ticks_duration = duration_ticks
-        self.flash_ticks_remaining = duration_ticks
-        pass
+        screen.blit(self.renderable.get_final_image(), self.rect)
