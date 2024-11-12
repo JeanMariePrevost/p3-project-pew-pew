@@ -17,7 +17,10 @@ class ProjectileManager:
         self.projectiles.append(shot)
 
     def remove_projectile(self, shot):
-        self.projectiles.remove(shot)
+        try:
+            self.projectiles.remove(shot)
+        except:
+            print(f"Error: Tried to remove non-existent projectile {shot}")
 
     def tick(self):
         for shot in self.projectiles:

@@ -51,6 +51,10 @@ class EnemyShipBasic(DamageableGameObject):
         EnemyProjectileBasic(self.x, self.y, 90)
         self.sound.play()
 
+    def take_damage(self, amount):
+        self.flash((255, 0, 0), 0.5, 9)
+        return super().take_damage(amount)
+
     def on_health_depleted(self):
         self.destroy()
 
