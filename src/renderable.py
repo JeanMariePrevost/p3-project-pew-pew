@@ -47,10 +47,10 @@ class Renderable:
             self.__source_image, (int(self.__source_image.get_width() * self.__scale), int(self.__source_image.get_height() * self.__scale))
         )
         # Apply tint
-        # TODO - Tint alpha
-        inverse_color = (255 - self.__tint[0], 255 - self.__tint[1], 255 - self.__tint[2])
-        self.__final_image.fill(inverse_color, special_flags=pygame.BLEND_RGB_SUB)
-        self.__final_image.fill(self.__tint, special_flags=pygame.BLEND_RGB_ADD)
+        additive_color = (self.__tint[0] * self.__tint_alpha, self.__tint[1] * self.__tint_alpha, self.__tint[2] * self.__tint_alpha)
+        subtractive_color = ((255 - self.__tint[0]) * self.__tint_alpha, (255 - self.__tint[1]) * self.__tint_alpha, (255 - self.__tint[2]) * self.__tint_alpha)
+        self.__final_image.fill(subtractive_color, special_flags=pygame.BLEND_RGB_SUB)
+        self.__final_image.fill(additive_color, special_flags=pygame.BLEND_RGB_ADD)
 
     def get_final_image(self):
         return self.__final_image
