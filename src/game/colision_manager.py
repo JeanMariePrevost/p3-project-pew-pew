@@ -35,6 +35,7 @@ class CollisionManager:
                 if self.check_collision_using_masks(projectile, get_player()):
                     projectile.destroy()
                     print("Player hit!")
+                    get_player().flash((255, 0, 0), 0.4, 12)
                     # TODO: Implement player taking damage
 
     def check_collision_using_masks(self, object1, object2) -> bool:

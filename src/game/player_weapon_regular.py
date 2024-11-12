@@ -1,7 +1,6 @@
 import pygame
 
 from game.player_projectile_regular import PlayerProjectileRegular
-from global_services import get_screen
 
 
 class PlayerWeaponBasic:
