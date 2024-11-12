@@ -18,4 +18,4 @@ class GameObject:
         pass
 
     def draw(self, screen):
-        pass
+        screen.blit(self.image, self.rect)

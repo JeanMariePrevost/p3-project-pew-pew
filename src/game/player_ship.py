@@ -62,8 +62,3 @@ class PlayerShip(GameObject):
             self.y -= self.speed
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.y += self.speed
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        # DEBUG: Draw the hit mask
-        # screen.blit(self.hit_mask.to_surface(), self.rect)

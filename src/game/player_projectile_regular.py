@@ -14,10 +14,3 @@ class PlayerProjectileRegular(Projectile):
             collision_type_set=CollisionTypeSet.get_new_default_player_shot_mask(),
             image_asset_path="assets/laserGreen08.png",
         )
-
-    # def tick(self):
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        # DEBUG: Draw the hit mask
-        # screen.blit(self.hit_mask.to_surface(), self.rect)

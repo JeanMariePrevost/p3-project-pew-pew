@@ -2,17 +2,16 @@ import os
 import pygame
 
 from game.enemy_projectile_basic import EnemyProjectileBasic
+from game.game_object import GameObject
 from global_services import get_enemy_manager, get_screen
 import random
 
 
-class EnemyShipBasic:
+class EnemyShipBasic(GameObject):
 
     def __init__(self):
         # Load the spaceship image from assets
-        self.image = pygame.image.load(os.path.join("assets", "enemyBlack2.png"))
-        self.rect = self.image.get_rect()
-        self.hit_mask = pygame.mask.from_surface(self.image)
+        super().__init__("assets/enemyBlack2.png")
 
         self.speed: float = random.choice([-2.5, 2.5])
         self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)
@@ -50,11 +49,6 @@ class EnemyShipBasic:
     def fire(self):
         EnemyProjectileBasic(self.x, self.y, 90)
         self.sound.play()
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
-        # DEBUG: Draw the hit mask
-        # screen.blit(self.hit_mask.to_surface(), self.rect)
 
     def destroy(self):
         get_enemy_manager().remove_enemy(self)

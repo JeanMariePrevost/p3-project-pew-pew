@@ -15,8 +15,3 @@ class EnemyProjectileBasic(Projectile):
             collision_type_set=CollisionTypeSet.get_new_default_enemy_shot_mask(),
             image_asset_path="assets/laserRed04_edited.png",
         )
-
-    # def tick(self):
-
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)

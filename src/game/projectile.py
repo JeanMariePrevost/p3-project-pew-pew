@@ -44,10 +44,6 @@ class Projectile(GameObject):
         if not screen_rect.inflate(self.OUT_OF_BOUNDS_EXTRA_SPACE, self.OUT_OF_BOUNDS_EXTRA_SPACE).colliderect(self.rect):
             self.destroy()
 
-    def draw(self, screen):
-        # Currently, all graphics are implemented entirely by the subclass
-        pass
-
     def destroy(self):
         get_projectile_manager().remove_projectile(self)
         del self
