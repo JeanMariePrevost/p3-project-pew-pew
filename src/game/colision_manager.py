@@ -15,6 +15,7 @@ class CollisionManager:
 
     def check_all_collisions(self):
         from global_services import get_enemy_manager, get_projectile_manager
+        from global_services import get_player
 
         # TODO: Implement player colliding with enemies
 
@@ -27,13 +28,26 @@ class CollisionManager:
         for projectile in all_projectiles:
             if projectile.collision_type_set.can_collide_with(CollisionType.ENEMY):
                 for enemy in all_enemies:
+                    if self.check_collision_using_masks(projectile, enemy):
+                        enemy.destroy()
+                        projectile.destroy()
+            if projectile.collision_type_set.can_collide_with(CollisionType.PLAYER):
+                if self.check_collision_using_masks(projectile, get_player()):
+                    projectile.destroy()
+                    print("Player hit!")
+                    # TODO: Implement player taking damage
 
-                    offset = (enemy.rect.x - projectile.rect.x, enemy.rect.y - projectile.rect.y)
-                    overlap = projectile.hit_mask.overlap_mask(enemy.hit_mask, offset)
+    def check_collision_using_masks(self, object1, object2) -> bool:
+        """
+        Check for pixel-perfect collision between two objects using their hit masks
+        Requires both objects to have a rect and a hit_mask attribute
+        """
+        offset = (object1.rect.x - object2.rect.x, object1.rect.y - object2.rect.y)
+        overlap = object2.hit_mask.overlap_mask(object1.hit_mask, offset)
 
-                    if overlap.count() > 0:
-                        # Some overlap
-                        overlap_rect = overlap.get_bounding_rects()[0]
-                        if overlap_rect.width > COLLISION_TOLERANCE or overlap_rect.height > COLLISION_TOLERANCE:
-                            enemy.destroy()
-                            projectile.destroy()
+        if overlap.count() > 0:
+            # Some overlap
+            overlap_rect = overlap.get_bounding_rects()[0]
+            if overlap_rect.width > COLLISION_TOLERANCE or overlap_rect.height > COLLISION_TOLERANCE:
+                return True
+        return False

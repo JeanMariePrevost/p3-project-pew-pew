@@ -1,7 +1,7 @@
 import os
 import pygame
 from game.player_weapon_regular import PlayerWeaponBasic
-from global_services import get_screen, event_occured_this_tick
+from global_services import get_screen, event_occured_this_tick, set_player
 
 
 class PlayerShip:
@@ -16,6 +16,7 @@ class PlayerShip:
         self.image = pygame.image.load(os.path.join("assets", "playerShip1_blue.png"))
         self.rect = self.image.get_rect()
         self.hit_mask = pygame.mask.from_surface(self.image)
+        set_player(self)
 
     def tick(self):
         global using_mouse_controls

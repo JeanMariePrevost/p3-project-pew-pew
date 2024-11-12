@@ -42,6 +42,20 @@ def clock_tick():
     return __clock.tick(FPS_CAP)
 
 
+__player_object = None
+
+
+def set_player(player_object):
+    global __player_object
+    __player_object = player_object
+
+
+def get_player():
+    if __player_object is None:
+        raise Exception("Player object has not been set yet")
+    return __player_object
+
+
 def update_events_for_current_tick(events):
     global __current_tick_events
     __current_tick_events = events

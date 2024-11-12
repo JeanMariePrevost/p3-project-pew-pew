@@ -28,7 +28,7 @@ class CollisionTypeSet:
 
     @classmethod
     def get_new_default_enemy_shot_mask(cls):
-        return cls(CollisionType.PLAYER_SHOT, CollisionType.ENVIRONMENT)
+        return cls(CollisionType.PLAYER, CollisionType.ENVIRONMENT)
 
     def add_collision_type(self, collision_type):
         self.types.add(collision_type)
