@@ -7,6 +7,7 @@ import global_events
 from global_services import get_enemy_manager, get_screen
 import random
 
+from renderable import Renderable
 from renderable_flash_wrapper import RenderableFlashWrapper
 
 
@@ -14,7 +15,7 @@ class EnemyShipBasic(DamageableGameObject):
 
     def __init__(self, image_asset_path="assets/enemyBlack2.png"):
         # Load the spaceship image from assets
-        super().__init__(image_asset_path)
+        super().__init__(Renderable(image_asset_path))
 
         # Set randomized starting position and speed
         self.speed: float = random.choice([-2.5, 2.5])

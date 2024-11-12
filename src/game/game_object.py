@@ -9,8 +9,8 @@ class GameObject:
     Includes hooks for drawing effects like flashes
     """
 
-    def __init__(self, image_asset_path):
-        self.renderable = Renderable(image_asset_path)
+    def __init__(self, renderable: Renderable):
+        self.renderable = renderable
         self.rect = self.renderable.get_rect()
         self.hit_mask = self.renderable.get_collision_mask()
 

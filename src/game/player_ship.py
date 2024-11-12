@@ -3,6 +3,7 @@ import pygame
 from game.game_object import GameObject
 from game.player_weapon_regular import PlayerWeaponBasic
 from global_services import get_screen, event_occured_this_tick, set_player
+from renderable import Renderable
 
 
 class PlayerShip(GameObject):
@@ -13,7 +14,7 @@ class PlayerShip(GameObject):
         self.y: float = 0
         self.using_mouse_controls: bool = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
         self.weapon: PlayerWeaponBasic = PlayerWeaponBasic()
-        super().__init__("assets/playerShip1_blue.png")
+        super().__init__(Renderable("assets/playerShip1_blue.png"))
         set_player(self)
 
     def tick(self):

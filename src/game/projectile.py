@@ -5,6 +5,7 @@ import pygame
 from game.collision_type_set import CollisionTypeSet
 from game.game_object import GameObject
 from global_services import get_projectile_manager, get_screen
+from renderable import Renderable
 
 
 class CollisionType(enum.Enum):
@@ -31,7 +32,7 @@ class Projectile(GameObject):
         self.impact_sound = pygame.mixer.Sound("assets/HitTheGround_edit.wav")
         self.impact_sound.set_volume(0.5)
 
-        super().__init__(image_asset_path)
+        super().__init__(Renderable(image_asset_path))
 
         get_projectile_manager().add_projectile(self)
 
