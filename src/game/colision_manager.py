@@ -29,8 +29,7 @@ class CollisionManager:
             if projectile.collision_type_set.can_collide_with(CollisionType.ENEMY):
                 for enemy in all_enemies:
                     if self.check_collision_using_masks(projectile, enemy):
-                        enemy.take_damage(1)
-                        projectile.destroy()
+                        projectile.hit_damageable_object(enemy)
             if projectile.collision_type_set.can_collide_with(CollisionType.PLAYER):
                 if self.check_collision_using_masks(projectile, get_player()):
                     projectile.destroy()

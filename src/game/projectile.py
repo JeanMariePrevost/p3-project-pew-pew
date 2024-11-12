@@ -24,6 +24,13 @@ class Projectile(GameObject):
         self.direction_in_radians = direction_in_degrees * math.pi / 180
         self.collision_type_set = collision_type_set
 
+        if not hasattr(self, "damage"):
+            self.damage = 1
+
+        # Currently hard-coded impact sound
+        self.impact_sound = pygame.mixer.Sound("assets/HitTheGround_edit.wav")
+        self.impact_sound.set_volume(0.5)
+
         super().__init__(image_asset_path)
 
         get_projectile_manager().add_projectile(self)
@@ -43,6 +50,11 @@ class Projectile(GameObject):
         # If the projectile is out of screen bounds with an additional buffer, destroy it
         if not screen_rect.inflate(self.OUT_OF_BOUNDS_EXTRA_SPACE, self.OUT_OF_BOUNDS_EXTRA_SPACE).colliderect(self.rect):
             self.destroy()
+
+    def hit_damageable_object(self, damageable_object):
+        damageable_object.take_damage(self.damage)
+        self.impact_sound.play()
+        self.destroy()
 
     def destroy(self):
         get_projectile_manager().remove_projectile(self)
