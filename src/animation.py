@@ -6,15 +6,15 @@ from global_events import tick_signal, draw_signal
 
 
 class Animation:
-    def create_from_folder(folder_path, loop=False, ticks_per_frame=1, autonomous=True):
+    def create_from_folder(folder_path, loop=False, ticks_per_frame=1, auto_tick=True, auto_draw=True):
         # Load all images from a folder and create an animation from them
         frames = []
         for file in os.listdir(folder_path):
             if file.endswith(".png"):
                 frames.append(pygame.image.load(os.path.join(folder_path, file)))
-        return Animation(*frames, loop=loop, ticks_per_frame=ticks_per_frame, autonomous=autonomous)
+        return Animation(*frames, loop=loop, ticks_per_frame=ticks_per_frame, auto_tick=auto_tick, auto_draw=auto_draw)
 
-    def __init__(self, *frames, loop=False, ticks_per_frame=1, autonomous=True):
+    def __init__(self, *frames, loop=False, ticks_per_frame=1, auto_tick=True, auto_draw=True):
         self.frames = frames
         self.ticks_per_frame = ticks_per_frame
         self.current_frame = 0
@@ -23,8 +23,9 @@ class Animation:
         self.x = 0
         self.y = 0
         self.scale = 1.0
-        if autonomous:
+        if auto_tick:
             tick_signal.add(self.tick)
+        if auto_draw:
             draw_signal.add(self.draw)
 
     def tick(self):

@@ -18,7 +18,7 @@ class PlayerProjectileRegular(Projectile):
         )
 
     def hit_damageable_object(self, damageable_object):
-        hit_animation = Animation.create_from_folder("assets/Simple explosion", loop=False, ticks_per_frame=2, autonomous=True)
+        hit_animation = Animation.create_from_folder("assets/Simple explosion", loop=False, ticks_per_frame=2, auto_tick=True)
         hit_animation.x = self.rect.centerx
         hit_animation.y = self.rect.centery
         hit_animation.scale = 0.5
