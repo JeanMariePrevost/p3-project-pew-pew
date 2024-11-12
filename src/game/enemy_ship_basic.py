@@ -1,13 +1,13 @@
 import os
 import pygame
 
+from game.damageable_game_object import DamageableGameObject
 from game.enemy_projectile_basic import EnemyProjectileBasic
-from game.game_object import GameObject
 from global_services import get_enemy_manager, get_screen
 import random
 
 
-class EnemyShipBasic(GameObject):
+class EnemyShipBasic(DamageableGameObject):
 
     def __init__(self):
         # Load the spaceship image from assets
@@ -17,6 +17,7 @@ class EnemyShipBasic(GameObject):
         self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)
         self.y: float = random.uniform(self.rect.height / 2, get_screen().get_rect().height / 3)
 
+        self.health = 3
         self.seconds_between_shots_min = 2
         self.seconds_between_shots_max = 12
         self.set_time_for_next_shot()
@@ -49,6 +50,9 @@ class EnemyShipBasic(GameObject):
     def fire(self):
         EnemyProjectileBasic(self.x, self.y, 90)
         self.sound.play()
+
+    def on_health_depleted(self):
+        self.destroy()
 
     def destroy(self):
         get_enemy_manager().remove_enemy(self)
