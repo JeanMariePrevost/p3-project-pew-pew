@@ -12,7 +12,8 @@ class PlayerWeaponBasic:
     def __init__(self) -> None:
         self.seconds_betwen_shots = 0.5
         self.time_at_last_shot = 0
-        self.sound = pygame.mixer.Sound("assets/Laser_shoot 80_low_quiet.wav")
+        self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
+        # self.sound.set_volume(0.05)
 
     def tick(self, player_x, player_y):
         # Check if the spacebar or LMB are currently pressed

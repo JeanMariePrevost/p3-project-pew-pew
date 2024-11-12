@@ -1,7 +1,7 @@
 import os
 import pygame
 
-from game.player_projectile_regular import PlayerProjectileRegular
+from game.enemy_projectile_basic import EnemyProjectileBasic
 from global_services import get_enemy_manager, get_screen
 import random
 
@@ -20,6 +20,9 @@ class EnemyShipBasic:
         self.seconds_between_shots_min = 2
         self.seconds_between_shots_max = 12
         self.set_time_for_next_shot()
+
+        self.sound = pygame.mixer.Sound("assets/Laser_shoot 123.wav")
+        self.sound.set_volume(2)
 
         get_enemy_manager().add_enemy(self)
 
@@ -44,8 +47,8 @@ class EnemyShipBasic:
         self.time_for_next_shot = pygame.time.get_ticks() + delay_in_ms
 
     def fire(self):
-        # DEBUG: testing with a player bullet for now
-        PlayerProjectileRegular(self.x, self.y, 90)
+        EnemyProjectileBasic(self.x, self.y, 90)
+        self.sound.play()
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
