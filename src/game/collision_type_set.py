@@ -9,7 +9,7 @@ class CollisionType(Enum):
     ENVIRONMENT = auto()
 
 
-class CollisionMask:
+class CollisionTypeSet:
     """
     Defines what a given object can collide with.
     E.g. a player shot can collide with an enemy ship, but not with another player shot.
@@ -19,7 +19,7 @@ class CollisionMask:
         self.collision_targets = set(collision_targets)
 
     def can_collide_with(self, collision_type: CollisionType):
-        """True if this mask can collide with the given type."""
+        """True if this set can collide with a given CollisionType."""
         return collision_type in self.collision_targets
 
     @classmethod

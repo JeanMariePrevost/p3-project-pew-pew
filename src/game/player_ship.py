@@ -15,6 +15,7 @@ class PlayerShip:
         # Load the spaceship image from assets
         self.image = pygame.image.load(os.path.join("assets", "playerShip1_blue.png"))
         self.rect = self.image.get_rect()
+        self.hit_mask = pygame.mask.from_surface(self.image)
 
     def tick(self):
         global using_mouse_controls
@@ -65,3 +66,5 @@ class PlayerShip:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        # DEBUG: Draw the hit mask
+        # screen.blit(self.hit_mask.to_surface(), self.rect)

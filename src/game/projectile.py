@@ -2,7 +2,7 @@ import enum
 import math
 import pygame
 
-from game.collision_mask import CollisionMask
+from game.collision_type_set import CollisionTypeSet
 from global_services import get_projectile_manager, get_screen
 
 
@@ -16,12 +16,13 @@ class CollisionType(enum.Enum):
 class Projectile:
     OUT_OF_BOUNDS_EXTRA_SPACE = 200
 
-    def __init__(self, x, y, speed, direction_in_degrees, collision_mask: CollisionMask):
+    def __init__(self, x, y, speed, direction_in_degrees, collision_type_set: CollisionTypeSet):
         self.x = x
         self.y = y
         self.speed = speed
         self.direction_in_radians = direction_in_degrees * math.pi / 180
-        self.collision_mask = collision_mask
+        self.collision_type_set = collision_type_set
+        self.hit_mask = pygame.mask.from_surface(self.image)
 
         get_projectile_manager().add_projectile(self)
 

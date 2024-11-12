@@ -1,4 +1,6 @@
-from game.collision_mask import CollisionType
+from game.collision_type_set import CollisionType
+
+COLLISION_TOLERANCE = 12  # Define minimum number of pixels to count as a collision, letting "graze" shots not count
 
 
 class CollisionManager:
@@ -23,11 +25,15 @@ class CollisionManager:
         # print(f"Checking {len(all_projectiles)} projectiles against {len(all_enemies)} enemies")
 
         for projectile in all_projectiles:
-            if projectile.collision_mask.can_collide_with(CollisionType.ENEMY):
+            if projectile.collision_type_set.can_collide_with(CollisionType.ENEMY):
                 for enemy in all_enemies:
-                    if projectile.rect.colliderect(enemy.rect):
-                        print("Projectile hit enemy!")
-                        enemy.destroy()
-                        projectile.destroy()
 
-        pass
+                    offset = (enemy.rect.x - projectile.rect.x, enemy.rect.y - projectile.rect.y)
+                    overlap = projectile.hit_mask.overlap_mask(enemy.hit_mask, offset)
+
+                    if overlap.count() > 0:
+                        # Some overlap
+                        overlap_rect = overlap.get_bounding_rects()[0]
+                        if overlap_rect.width > COLLISION_TOLERANCE or overlap_rect.height > COLLISION_TOLERANCE:
+                            enemy.destroy()
+                            projectile.destroy()

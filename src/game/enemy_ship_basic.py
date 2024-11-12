@@ -12,6 +12,7 @@ class EnemyShipBasic:
         # Load the spaceship image from assets
         self.image = pygame.image.load(os.path.join("assets", "enemyBlack2.png"))
         self.rect = self.image.get_rect()
+        self.hit_mask = pygame.mask.from_surface(self.image)
 
         self.speed: float = random.choice([-2.5, 2.5])
         self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)
@@ -52,6 +53,8 @@ class EnemyShipBasic:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        # DEBUG: Draw the hit mask
+        # screen.blit(self.hit_mask.to_surface(), self.rect)
 
     def destroy(self):
         get_enemy_manager().remove_enemy(self)
