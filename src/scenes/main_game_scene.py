@@ -21,12 +21,6 @@ class MainGameScene(BaseScene):
         for _ in range(10):
             EnemyShipBasic()
 
-        # DEBUG: create a single looping animation while I figure things out
-        self.animation = Animation.create_from_folder("assets/Simple explosion", loop=True, ticks_per_frame=2)
-        self.animation.x = 200
-        self.animation.y = 200
-        self.animation.scale = 0.5
-
     def tick(self):
         # Core game loop
         screen = get_screen()
@@ -38,14 +32,10 @@ class MainGameScene(BaseScene):
         get_projectile_manager().tick()
         get_collision_manager().tick()
 
-        self.animation.tick()
-
     def draw(self, screen):
         get_enemy_manager().draw(screen)
         get_projectile_manager().draw(screen)
         self.player_ship.draw(screen)
-
-        self.animation.draw(screen)
 
     def destroy(self):
         # Currently doesn't need to do anything beyond stop ticking, which is already handled by the main loop

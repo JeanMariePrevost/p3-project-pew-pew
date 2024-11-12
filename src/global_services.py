@@ -15,6 +15,7 @@ import pygame
 from game.colision_manager import CollisionManager
 from game.enemy_manager import EnemyManager
 from game.projectile_manager import ProjectileManager
+from util.signal import Signal
 
 
 # Constants
@@ -57,6 +58,9 @@ def get_player():
 
 
 def update_events_for_current_tick(events):
+    """
+    Updates the pyagme events that were triggered during the current tick for other modules to access.
+    """
     global __current_tick_events
     __current_tick_events = events
 
@@ -94,3 +98,9 @@ def get_enemy_manager():
 
 def get_collision_manager():
     return __collision_manager
+
+
+# "Unsafe" tick and draw signals, great for visuals and non-critical / non order-sensitive logic
+# E.g. usage: tick_signal.add(my_function)
+tick_signal = Signal()
+draw_signal = Signal()

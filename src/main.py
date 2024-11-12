@@ -1,6 +1,6 @@
 import pygame
 import sys
-from global_services import event_occured_this_tick, get_screen, BG_COLOR, clock_tick, update_events_for_current_tick
+from global_services import event_occured_this_tick, get_screen, BG_COLOR, clock_tick, update_events_for_current_tick, tick_signal, draw_signal
 from scenes.base_scene import BaseScene
 from scenes.main_game_scene import MainGameScene
 
@@ -27,6 +27,9 @@ def run_core_game_loop():
         if current_scene is not None:
             current_scene.tick()
             current_scene.draw(get_screen())
+
+        tick_signal.trigger()  # Global "unsafe" ticking signal
+        draw_signal.trigger(get_screen())  # Global "unsafe" drawing signal
 
         pygame.display.flip()  # Update the display with the buffer
         clock_tick()  # Cap the frame rate, sleep until it's time for the next frame

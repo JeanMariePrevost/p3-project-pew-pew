@@ -2,18 +2,19 @@ import os
 
 import pygame
 
+from global_services import tick_signal, draw_signal
+
 
 class Animation:
-    def create_from_folder(folder_path, loop=False, ticks_per_frame=1):
+    def create_from_folder(folder_path, loop=False, ticks_per_frame=1, autonomous=True):
         # Load all images from a folder and create an animation from them
         frames = []
         for file in os.listdir(folder_path):
             if file.endswith(".png"):
-                print(f"Loading {file}")
                 frames.append(pygame.image.load(os.path.join(folder_path, file)))
-        return Animation(*frames, loop=loop, ticks_per_frame=ticks_per_frame)
+        return Animation(*frames, loop=loop, ticks_per_frame=ticks_per_frame, autonomous=autonomous)
 
-    def __init__(self, *frames, loop=False, ticks_per_frame=1):
+    def __init__(self, *frames, loop=False, ticks_per_frame=1, autonomous=True):
         self.frames = frames
         self.ticks_per_frame = ticks_per_frame
         self.current_frame = 0
@@ -22,6 +23,9 @@ class Animation:
         self.x = 0
         self.y = 0
         self.scale = 1.0
+        if autonomous:
+            tick_signal.add(self.tick)
+            draw_signal.add(self.draw)
 
     def tick(self):
         self.ticks_until_next_frame -= 1
@@ -33,6 +37,7 @@ class Animation:
                     self.current_frame = 0
                 else:
                     self.current_frame = len(self.frames) - 1
+                    self.destroy()
 
     def draw(self, screen):
         # Get the current frame's surface
@@ -48,3 +53,7 @@ class Animation:
 
         # Blit the scaled image at the calculated position
         screen.blit(current_image, position)
+
+    def destroy(self):
+        tick_signal.remove(self.tick)
+        draw_signal.remove(self.draw)
