@@ -3,6 +3,7 @@ import pygame
 
 from game.damageable_game_object import DamageableGameObject
 from game.enemy_projectile_basic import EnemyProjectileBasic
+import global_events
 from global_services import get_enemy_manager, get_screen
 import random
 
@@ -56,6 +57,7 @@ class EnemyShipBasic(DamageableGameObject):
         return super().take_damage(amount)
 
     def on_health_depleted(self):
+        global_events.enemy_destroyed.trigger(self)
         self.destroy()
 
     def destroy(self):

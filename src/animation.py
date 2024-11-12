@@ -2,7 +2,7 @@ import os
 
 import pygame
 
-from global_services import tick_signal, draw_signal
+from global_events import tick_signal, draw_signal
 
 
 class Animation:

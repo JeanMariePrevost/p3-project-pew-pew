@@ -98,9 +98,3 @@ def get_enemy_manager():
 
 def get_collision_manager():
     return __collision_manager
-
-
-# "Unsafe" tick and draw signals, great for visuals and non-critical / non order-sensitive logic
-# E.g. usage: tick_signal.add(my_function)
-tick_signal = Signal()
-draw_signal = Signal()
