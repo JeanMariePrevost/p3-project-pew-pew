@@ -23,6 +23,7 @@ class Animation:
         self.x = 0
         self.y = 0
         self.scale = 1.0
+        self.remove_when_done = False
         if auto_tick:
             tick_signal.add(self.tick)
         if auto_draw:
@@ -31,18 +32,24 @@ class Animation:
     def tick(self):
         self.ticks_until_next_frame -= 1
         if self.ticks_until_next_frame <= 0:
-            self.ticks_until_next_frame = self.ticks_per_frame
-            self.current_frame += 1
-            if self.current_frame >= len(self.frames):
-                if self.loop:
-                    self.current_frame = 0
-                else:
-                    self.current_frame = len(self.frames) - 1
+            self.advance_frame()
+
+    def advance_frame(self):
+        self.current_frame += 1
+        if self.current_frame >= len(self.frames):
+            if self.loop:
+                self.current_frame = 0
+            else:
+                self.current_frame = len(self.frames) - 1
+                if self.remove_when_done:
                     self.destroy()
+
+    def get_current_frame_image(self) -> pygame.Surface:
+        return self.frames[self.current_frame]
 
     def draw(self, screen):
         # Get the current frame's surface
-        current_image = self.frames[self.current_frame]
+        current_image = self.get_current_frame_image()
 
         if self.scale != 1.0:
             scaled_width = int(current_image.get_width() * self.scale)
