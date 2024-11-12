@@ -2,10 +2,11 @@ import enum
 import math
 import pygame
 
+from game.collision_mask import CollisionMask
 from global_services import get_projectile_manager, get_screen
 
 
-class CollisionMask(enum.Enum):
+class CollisionType(enum.Enum):
     PLAYER_SHOT = 1
     ENEMY_SHOT = 2
     ENVIRONMENT = 3
@@ -15,7 +16,7 @@ class CollisionMask(enum.Enum):
 class Projectile:
     OUT_OF_BOUNDS_EXTRA_SPACE = 200
 
-    def __init__(self, x, y, speed, direction_in_degrees, collision_mask):
+    def __init__(self, x, y, speed, direction_in_degrees, collision_mask: CollisionMask):
         self.x = x
         self.y = y
         self.speed = speed
@@ -38,8 +39,12 @@ class Projectile:
         screen_rect = get_screen().get_rect()
         # If the projectile is out of screen bounds with an additional buffer, destroy it
         if not screen_rect.inflate(self.OUT_OF_BOUNDS_EXTRA_SPACE, self.OUT_OF_BOUNDS_EXTRA_SPACE).colliderect(self.rect):
-            get_projectile_manager().remove_projectile(self)
+            self.destroy()
 
     def draw(self, screen):
         # Currently, all graphics are implemented entirely by the subclass
         pass
+
+    def destroy(self):
+        get_projectile_manager().remove_projectile(self)
+        del self

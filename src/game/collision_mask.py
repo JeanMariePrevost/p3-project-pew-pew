@@ -15,8 +15,8 @@ class CollisionMask:
     E.g. a player shot can collide with an enemy ship, but not with another player shot.
     """
 
-    def __init__(self):
-        self.collision_targets = set()
+    def __init__(self, *collision_targets: CollisionType):
+        self.collision_targets = set(collision_targets)
 
     def can_collide_with(self, collision_type: CollisionType):
         """True if this mask can collide with the given type."""
@@ -24,7 +24,7 @@ class CollisionMask:
 
     @classmethod
     def get_new_default_player_shot_mask(cls):
-        return cls(CollisionType.ENEMY_SHOT, CollisionType.ENVIRONMENT, CollisionType.ENEMY_SHIP)
+        return cls(CollisionType.ENEMY_SHOT, CollisionType.ENVIRONMENT, CollisionType.ENEMY)
 
     @classmethod
     def get_new_default_enemy_shot_mask(cls):

@@ -7,7 +7,7 @@ progresses smoothly.
 
 from game.enemy_ship_basic import EnemyShipBasic
 from game.player_ship import PlayerShip
-from global_services import BG_COLOR, get_enemy_manager, get_projectile_manager, get_screen
+from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_projectile_manager, get_screen
 from scenes.base_scene import BaseScene
 
 
@@ -29,6 +29,7 @@ class MainGameScene(BaseScene):
 
         get_enemy_manager().tick()
         get_projectile_manager().tick()
+        get_collision_manager().tick()
 
     def draw(self, screen):
         get_enemy_manager().draw(screen)

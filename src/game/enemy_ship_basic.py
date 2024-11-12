@@ -52,3 +52,7 @@ class EnemyShipBasic:
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def destroy(self):
+        get_enemy_manager().remove_enemy(self)
+        del self
