@@ -1,10 +1,11 @@
 import os
 import pygame
+from game.game_object import GameObject
 from game.player_weapon_regular import PlayerWeaponBasic
 from global_services import get_screen, event_occured_this_tick, set_player
 
 
-class PlayerShip:
+class PlayerShip(GameObject):
 
     def __init__(self):
         self.speed: float = 7.5  # Speed of the player ship
@@ -12,10 +13,7 @@ class PlayerShip:
         self.y: float = 0
         self.using_mouse_controls: bool = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
         self.weapon: PlayerWeaponBasic = PlayerWeaponBasic()
-        # Load the spaceship image from assets
-        self.image = pygame.image.load(os.path.join("assets", "playerShip1_blue.png"))
-        self.rect = self.image.get_rect()
-        self.hit_mask = pygame.mask.from_surface(self.image)
+        super().__init__("assets/playerShip1_blue.png")
         set_player(self)
 
     def tick(self):

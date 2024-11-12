@@ -3,6 +3,7 @@ import math
 import pygame
 
 from game.collision_type_set import CollisionTypeSet
+from game.game_object import GameObject
 from global_services import get_projectile_manager, get_screen
 
 
@@ -13,16 +14,17 @@ class CollisionType(enum.Enum):
     # Add more collision types as needed
 
 
-class Projectile:
+class Projectile(GameObject):
     OUT_OF_BOUNDS_EXTRA_SPACE = 200
 
-    def __init__(self, x, y, speed, direction_in_degrees, collision_type_set: CollisionTypeSet):
+    def __init__(self, x, y, speed, direction_in_degrees, collision_type_set: CollisionTypeSet, image_asset_path):
         self.x = x
         self.y = y
         self.speed = speed
         self.direction_in_radians = direction_in_degrees * math.pi / 180
         self.collision_type_set = collision_type_set
-        self.hit_mask = pygame.mask.from_surface(self.image)
+
+        super().__init__(image_asset_path)
 
         get_projectile_manager().add_projectile(self)
 
