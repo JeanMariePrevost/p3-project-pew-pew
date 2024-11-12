@@ -10,9 +10,9 @@ import random
 
 class EnemyShipBasic(DamageableGameObject):
 
-    def __init__(self):
+    def __init__(self, image_asset_path="assets/enemyBlack2.png"):
         # Load the spaceship image from assets
-        super().__init__("assets/enemyBlack2.png")
+        super().__init__(image_asset_path)
 
         self.speed: float = random.choice([-2.5, 2.5])
         self.x: float = random.uniform(self.rect.width / 2, get_screen().get_rect().right - self.rect.width / 2)

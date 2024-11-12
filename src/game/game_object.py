@@ -9,6 +9,7 @@ class GameObject:
 
     def __init__(self, image_asset_path):
         self.image = pygame.image.load(image_asset_path)
+        self.scaled_image = self.image
         self.rect = self.image.get_rect()
         self.hit_mask = pygame.mask.from_surface(self.image)
 
@@ -19,6 +20,11 @@ class GameObject:
 
     def tick(self):
         pass
+
+    def change_scale(self, scale):
+        self.scaled_image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
+        self.rect = self.scaled_image.get_rect(center=self.rect.center)
+        self.hit_mask = pygame.mask.from_surface(self.scaled_image)
 
     def draw(self, screen):
         if self.flash_ticks_remaining > 0:
@@ -42,7 +48,7 @@ class GameObject:
             )
 
             # Create a tinted version of the image
-            tinted_image = self.image.copy()
+            tinted_image = self.scaled_image.copy()
 
             # Subtract then add the fill colors to create an overlay effect that respects transparency
             tinted_image.fill(sub_color, special_flags=pygame.BLEND_RGB_SUB)
@@ -52,7 +58,7 @@ class GameObject:
             screen.blit(tinted_image, self.rect)
         else:
             # Draw the object normally
-            screen.blit(self.image, self.rect)
+            screen.blit(self.scaled_image, self.rect)
 
     def flash(self, color_rgb, alpha, duration_ticks):
         """Makes the object flash a color for a certain number of ticks"""

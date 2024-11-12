@@ -8,6 +8,7 @@ progresses smoothly.
 from animation import Animation
 from game.enemy_ship_basic import EnemyShipBasic
 from game.player_ship import PlayerShip
+from game.powerup_container import PowerupContainer
 from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_projectile_manager, get_screen
 from global_events import all_enemies_destroyed
 from scenes.base_scene import BaseScene
@@ -52,3 +53,7 @@ class MainGameScene(BaseScene):
         print(f"Triggering wave {self._current_level}")
         for _ in range(3 + int((self._current_level - 1) / 2)):
             EnemyShipBasic()
+
+        # power up spawns every other level
+        if self._current_level % 2 == 0:
+            PowerupContainer()

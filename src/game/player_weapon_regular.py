@@ -9,7 +9,7 @@ class PlayerWeaponBasic:
     """
 
     def __init__(self) -> None:
-        self.seconds_betwen_shots = 0.5
+        self.seconds_betwen_shots = 0.1
         self.time_at_last_shot = 0
         self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
         # self.sound.set_volume(0.05)
