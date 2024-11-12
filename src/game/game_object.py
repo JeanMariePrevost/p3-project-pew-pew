@@ -1,5 +1,7 @@
 import pygame
 
+from renderable import Renderable
+
 
 class GameObject:
     """
@@ -8,57 +10,24 @@ class GameObject:
     """
 
     def __init__(self, image_asset_path):
-        self.image = pygame.image.load(image_asset_path)
-        self.scaled_image = self.image
-        self.rect = self.image.get_rect()
-        self.hit_mask = pygame.mask.from_surface(self.image)
+        self.sprite = Renderable(image_asset_path)
+        self.rect = self.sprite.get_rect()
+        self.hit_mask = self.sprite.get_collision_mask()
 
-        self.flash_color = None
-        self.flash_ticks_duration = 0
-        self.flash_ticks_remaining = 0
-        pass
+        # self.flash_color = None
+        # self.flash_ticks_duration = 0
+        # self.flash_ticks_remaining = 0
 
     def tick(self):
+        # No default behavior
         pass
 
-    def change_scale(self, scale):
-        self.scaled_image = pygame.transform.scale(self.image, (int(self.image.get_width() * scale), int(self.image.get_height() * scale)))
-        self.rect = self.scaled_image.get_rect(center=self.rect.center)
-        self.hit_mask = pygame.mask.from_surface(self.scaled_image)
+    def set_scale(self, scale):
+        self.sprite.set_scale(scale)
+        # TODO: Need to update the reference to the rect and hit mask? Test it out.
 
     def draw(self, screen):
-        if self.flash_ticks_remaining > 0:
-            self.flash_ticks_remaining -= 1
-
-            # Calculate flassh effect fade factor
-            fade_factor = self.flash_ticks_remaining / self.flash_ticks_duration
-            fade_factor *= self.flash_alpha
-
-            # Calculate the additive and subtractive colors for the flash effect
-            sub_color = (
-                int((255 - self.flash_color[0]) * fade_factor),
-                int((255 - self.flash_color[1]) * fade_factor),
-                int((255 - self.flash_color[2]) * fade_factor),
-            )
-
-            add_color = (
-                int(self.flash_color[0] * fade_factor),
-                int(self.flash_color[1] * fade_factor),
-                int(self.flash_color[2] * fade_factor),
-            )
-
-            # Create a tinted version of the image
-            tinted_image = self.scaled_image.copy()
-
-            # Subtract then add the fill colors to create an overlay effect that respects transparency
-            tinted_image.fill(sub_color, special_flags=pygame.BLEND_RGB_SUB)
-            tinted_image.fill(add_color, special_flags=pygame.BLEND_RGB_ADD)
-
-            # Blit the final tinted image onto the screen
-            screen.blit(tinted_image, self.rect)
-        else:
-            # Draw the object normally
-            screen.blit(self.scaled_image, self.rect)
+        screen.blit(self.sprite.get_final_image(), self.rect)
 
     def flash(self, color_rgb, alpha, duration_ticks):
         """Makes the object flash a color for a certain number of ticks"""

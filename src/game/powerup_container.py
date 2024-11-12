@@ -16,7 +16,7 @@ class PowerupContainer(EnemyShipBasic):
         self.y: float = random.uniform(self.rect.height / 2, get_screen().get_rect().height / 5)
 
         self.health = 1
-        self.change_scale(0.66)
+        self.set_scale(0.66)
 
         # global_events.tick_signal.add(self.tick)
         # global_events.draw_signal.add(self.draw)
