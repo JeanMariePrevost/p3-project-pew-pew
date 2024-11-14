@@ -47,5 +47,5 @@ class Button(GameObject):
         screen.blit(self.text_renderable.get_final_image(), offset_rect)
 
     def destroy(self):
-        self.clicked_signal.clear()
+        self.clicked_signal.remove_all()
         return super().destroy()

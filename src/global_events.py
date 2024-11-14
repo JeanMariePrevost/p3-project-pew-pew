@@ -6,6 +6,8 @@ e.g. enemies being destroyed, player death, etc.
 from util.signal import Signal
 
 
+current_scene_destroyed = Signal()  # payload: None
+
 # "Unsafe" tick and draw signals, great for visuals and non-critical / non order-sensitive logic
 # E.g. usage: tick_signal.add(my_function)
 tick_signal = Signal()

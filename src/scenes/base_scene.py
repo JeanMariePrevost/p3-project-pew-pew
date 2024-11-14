@@ -35,11 +35,10 @@ class BaseScene:
         """
         raise NotImplementedError("The 'draw' method must be implemented in subclasses.")
 
-    def fade_out_then_destroy(self, duration_in_ms):
+    def fade_out(self, duration_in_ms):
         self.fade_out_duration = duration_in_ms
         self.fade_out_start_time = pygame.time.get_ticks()
         global_events.draw_signal.add(self.fade_out_draw, -99)  # Draw the fade out last
-        self.destroy()
 
     def fade_in(self, duration_in_ms):
         self.fade_in_duration = duration_in_ms
@@ -76,5 +75,5 @@ class BaseScene:
 
     def destroy(self):
         """Hook to stop and clean up the screen resources."""
-        self.fade_out_complete_signal.clear()
+        self.fade_out_complete_signal.remove_all()
         pass

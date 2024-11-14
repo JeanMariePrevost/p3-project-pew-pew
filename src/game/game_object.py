@@ -24,6 +24,7 @@ class GameObject:
         global_events.tick_signal.add(self.tick)
         # HACK - add draw signal THROUGH the first tick, so that the object is guaranteed to have applied its position before drawing
         global_events.tick_signal.add(self.register_to_draw_signal_on_first_tick)
+        global_events.current_scene_destroyed.add(self.destroy)
 
         global_services.get_collision_manager().add_game_object(self)
 
@@ -56,6 +57,7 @@ class GameObject:
         global_services.get_collision_manager().remove_game_object(self)
         global_events.tick_signal.remove(self.tick)
         global_events.draw_signal.remove(self.draw)
+        global_events.current_scene_destroyed.remove(self.destroy)
         self.renderable.destroy()
         self.was_destroyed = True
 

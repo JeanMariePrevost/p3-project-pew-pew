@@ -9,6 +9,7 @@ from scenes.base_scene import BaseScene
 
 class MainMenuScene(BaseScene):
     def __init__(self):
+        super().__init__()
         self.title_card = GameObject(Renderable("assets/P3.png"))
         self.title_card.rect.centerx = global_services.get_screen().get_width() / 2
         self.title_card.rect.y = 100
@@ -36,7 +37,10 @@ class MainMenuScene(BaseScene):
         self.startfield_bg = StarFieldBackground(global_services.get_screen())
 
     def on_play_button_clicked(self, button):
+        import main
+
         print("Play button clicked on main menu")
+        main.start_scene_transition(self, main.MainGameScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
 
     def on_highscores_button_clicked(self, button):
         print("Highscores button clicked on main menu")
@@ -55,3 +59,6 @@ class MainMenuScene(BaseScene):
         # Clear sceen with black
         screen.fill((0, 0, 0))
         self.startfield_bg.draw()
+
+    def destroy(self):
+        return super().destroy()

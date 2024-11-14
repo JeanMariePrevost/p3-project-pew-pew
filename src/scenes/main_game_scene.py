@@ -5,7 +5,6 @@ of the game, ensuring that all game components interact correctly and the game
 progresses smoothly.
 """
 
-from ast import main
 import pygame
 from game.enemy_ship_basic import EnemyShipBasic
 from game.gui_power_bar import GuiPowerBar

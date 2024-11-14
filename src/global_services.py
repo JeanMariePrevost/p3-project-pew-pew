@@ -41,6 +41,18 @@ def clock_tick():
     return __clock.tick(FPS_CAP)
 
 
+__current_scene = None
+
+
+def get_current_scene():
+    return __current_scene
+
+
+def set_current_scene(scene):
+    global __current_scene
+    __current_scene = scene
+
+
 __player_object = None
 
 

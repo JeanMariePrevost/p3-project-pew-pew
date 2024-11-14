@@ -29,5 +29,5 @@ class GuiPowerBar(GameObject):
         screen.blit(self.renderable.get_final_image(), self.rect)
 
     def destroy(self):
-        global_events.player_weapon_changed_signal.remove(self.on_player_weapon_changed)
+        global_events.player_weapon_changed.remove(self.on_player_weapon_changed)
         return super().destroy()
