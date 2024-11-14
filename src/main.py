@@ -3,6 +3,7 @@ import sys
 from game import memory_debugger
 import global_events
 from global_services import event_occured_this_tick, get_screen, clock_tick, update_events_for_current_tick
+from menu.main_menu_scene import MainMenuScene
 from scenes.base_scene import BaseScene
 from scenes.main_game_scene import MainGameScene
 
@@ -13,7 +14,8 @@ def initial_setup():
     print("Initial setup")
     pygame.init()
     pygame.mixer.init()
-    change_scene(MainGameScene())
+    # change_scene(MainGameScene())
+    change_scene(MainMenuScene())
     print("Initial setup complete")
 
 
