@@ -11,6 +11,7 @@ class Renderable:
         self._rotation = 0
         self._tint = (255, 255, 255)
         self._tint_alpha = 0
+        self._alpha = 255
 
         self.load_asset(asset_path)
 
@@ -23,6 +24,10 @@ class Renderable:
         self._scale = scale
         self.refresh_final_image()
         self.update_collision_mask()
+
+    def set_alpha(self, alpha):
+        self._alpha = alpha
+        self.refresh_final_image()
 
     def set_rotation(self, angle):
         self._rotation = angle
@@ -50,6 +55,7 @@ class Renderable:
         self._final_image = self.get_scaled_version_of(self._source_image)
         self._final_image = self.get_tinted_version_of(self._final_image)
         self._final_image = self.get_rotated_version_of(self._final_image)
+        self._final_image.set_alpha(self._alpha)
 
     def get_scaled_version_of(self, image):
         return pygame.transform.scale(image, (int(image.get_width() * self._scale), int(image.get_height() * self._scale)))
