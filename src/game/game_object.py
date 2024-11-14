@@ -21,7 +21,6 @@ class GameObject:
     def set_scale(self, scale):
         self.renderable.set_scale(scale)
         self.hit_mask = self.renderable.get_collision_mask()
-        # TODO: Need to update the reference to the rect and hit mask? Test it out.
 
     def draw(self, screen):
         screen.blit(self.renderable.get_final_image(), self.rect)

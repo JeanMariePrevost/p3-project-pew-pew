@@ -1,5 +1,6 @@
 import random
 from game.enemy_ship_basic import EnemyShipBasic
+from game.powerup import Powerup
 import global_events
 from global_services import get_screen
 
@@ -27,6 +28,7 @@ class PowerupContainer(EnemyShipBasic):
 
     def on_health_depleted(self):
         # TODO: Implement powerup spawning
+        Powerup(self.x, self.y)
         return super().on_health_depleted()
 
     # def destroy(self):
