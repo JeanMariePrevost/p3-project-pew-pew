@@ -21,9 +21,14 @@ class GameObject:
             self.__collision_targets = CollisionTypeSet()  # By default, a GameObject won't collide with anything
 
         global_events.tick_signal.add(self.tick)
-        global_events.draw_signal.add(self.draw)
+        # HACK - add draw signal THROUGH the first tick, so that the object is guaranteed to have applied its position before drawing
+        global_events.tick_signal.add(self.register_to_draw_signal_on_first_tick)
 
         global_services.get_collision_manager().add_game_object(self)
+
+    def register_to_draw_signal_on_first_tick(self):
+        global_events.draw_signal.add(self.draw)
+        global_events.tick_signal.remove(self.register_to_draw_signal_on_first_tick)
 
     def set_collision_types(self, collision_class: CollisionType = None, collision_targets: CollisionTypeSet = None):
         assert isinstance(collision_class, CollisionType) or collision_class is None
