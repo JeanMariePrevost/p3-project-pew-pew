@@ -19,6 +19,7 @@ class PlayerShip(GameObject):
         self.change_weapon(PlayerWeaponBasic(self))
         self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
         global_services.set_player(self)
+        global_events.player_took_damage.add(self.on_player_took_damage)
 
     def change_weapon(self, weapon):
         print(f"PlayerShip has weapon: {hasattr(self, '_weapon')}")
@@ -27,6 +28,10 @@ class PlayerShip(GameObject):
         self._weapon = weapon
         global_events.player_weapon_changed.trigger(weapon)
         print("Weapon changed to", weapon)
+
+    def on_player_took_damage(self, enemy_projectile):
+        print("Player took damage!")
+        self._weapon
 
     def tick(self):
         global using_mouse_controls

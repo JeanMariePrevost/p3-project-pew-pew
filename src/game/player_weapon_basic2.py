@@ -12,16 +12,14 @@ class PlayerWeaponBasic2(PlayerWeaponBasic):
     """
 
     def __init__(self, player_ship) -> None:
+        from game.player_weapon_basic3 import PlayerWeaponBasic3
+
         super().__init__(player_ship)
         self.on_left_shot = True
         self.level = 2
         self.seconds_betwen_shots = 0.2
-
-    def on_item_collected_by_player(self, item_object):
-        from game.player_weapon_basic3 import PlayerWeaponBasic3
-
-        if isinstance(item_object, Powerup):
-            self.player_ship.change_weapon(PlayerWeaponBasic3(self.player_ship))
+        self._next_weapon_class = PlayerWeaponBasic3
+        self._previous_weapon_class = PlayerWeaponBasic
 
     def fire(self, player_x, player_y):
         self.time_at_last_shot = pygame.time.get_ticks()

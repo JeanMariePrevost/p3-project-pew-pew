@@ -2,6 +2,7 @@ import pygame
 
 from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.projectile import Projectile
+import global_events
 import global_services
 from renderable_flash_wrapper import RenderableFlashWrapper
 
@@ -20,6 +21,7 @@ class EnemyProjectileBasic(Projectile):
 
     def on_collision_with_target(self, other):
         self.destroy()
-        print("Player hit!")
-        RenderableFlashWrapper(global_services.get_player().renderable, (255, 0, 0), 0.4, 12)
-        # TODO: Implement player taking damage
+        if other == global_services.get_player():
+            global_events.player_took_damage.trigger(self)
+            RenderableFlashWrapper(global_services.get_player().renderable, (255, 0, 0), 0.4, 12)
+            # TODO: Implement player taking damage

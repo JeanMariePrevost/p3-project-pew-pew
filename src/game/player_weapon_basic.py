@@ -11,20 +11,36 @@ class PlayerWeaponBasic:
     """
 
     def __init__(self, player_ship) -> None:
+        from game.player_weapon_basic2 import PlayerWeaponBasic2
+
         self.player_ship = player_ship
         self.seconds_betwen_shots = 0.4
         self.time_at_last_shot = 0
         self.level = 1
         self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
-        # self.sound.set_volume(0.05)
+        self._next_weapon_class = PlayerWeaponBasic2
+        self._previous_weapon_class = None
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)
 
     def on_item_collected_by_player(self, item_object):
-        from game.player_weapon_basic2 import PlayerWeaponBasic2
-
         if isinstance(item_object, Powerup):
-            self.player_ship.change_weapon(PlayerWeaponBasic2(self.player_ship))
+            self.increase_level()
+
+    def increase_level(self):
+        if self._next_weapon_class is not None:
+            self.player_ship.change_weapon(self._next_weapon_class(self.player_ship))
             print("Player weapon upgraded!")
+        else:
+            # Maxed out
+            global_events.powerup_collected_when_weapon_maxed.trigger()
+
+    def decresase_level(self):
+        if self._previous_weapon_class is not None:
+            self.player_ship.change_weapon(self._previous_weapon_class(self.player_ship))
+            print("Player weapon downgraded!")
+        else:
+            # Death
+            print("Player weapon downgraded to zero, game over")
 
     def tick(self, player_x, player_y):
         # Check if the spacebar or LMB are currently pressed

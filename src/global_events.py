@@ -18,3 +18,4 @@ all_enemies_destroyed = Signal()  # payload: None
 item_collected_by_player = Signal()  # payload: Powerup
 player_weapon_changed = Signal()  # payload: PlayerWeaponBasic
 powerup_collected_when_weapon_maxed = Signal()  # payload: None
+player_took_damage = Signal()  # payload: EnemyProjectileBasic
