@@ -63,16 +63,12 @@ def finish_scene_transition(from_scene: BaseScene | None, target_scene_class: ty
     if from_scene is not None:
         from_scene.destroy()
 
-    # global_events.current_scene_destroyed.trigger()
-    # pygame.time.wait(100)  # DEBUG - Does this prevent semi-destroyed next scene?
-
     # Pause for a moment before fading in
     pygame.time.wait(pause_ms)
-    change_scene(target_scene_class)
-    # target_scene.fade_in(fadein_ms)
+    change_scene(target_scene_class, fadein_ms)
 
 
-def change_scene(next_scene_class: type):
+def change_scene(next_scene_class: type, fade_ms: int = 100):
     assert isinstance(next_scene_class, type)
     assert issubclass(next_scene_class, BaseScene)
     current_scene = get_current_scene()
@@ -84,6 +80,8 @@ def change_scene(next_scene_class: type):
     else:
         print(f"Changing from [no scene] to [{next_scene_class}]")
     set_current_scene(next_scene_class())
+    if fade_ms > 0:
+        get_current_scene().fade_in(fade_ms)
     print(f"Scene changed to [{current_scene}]")
 
 
