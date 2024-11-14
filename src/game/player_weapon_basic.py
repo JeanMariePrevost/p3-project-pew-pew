@@ -22,10 +22,12 @@ class PlayerWeaponBasic:
         self._next_weapon_class = PlayerWeaponBasic2
         self._previous_weapon_class = None
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)
+        self.time_at_creation = pygame.time.get_ticks()  # HACK: to "debounce" the powerup collection
 
     def on_item_collected_by_player(self, item_object):
-        if isinstance(item_object, Powerup):
-            self.increase_level()
+        if pygame.time.get_ticks() - self.time_at_creation >= 500:
+            if isinstance(item_object, Powerup):
+                self.increase_level()
 
     def increase_level(self):
         if self._next_weapon_class is not None:

@@ -36,7 +36,7 @@ class BaseScene:
     def fade_out(self):
         self.fade_out_duration = 3000
         self.fade_out_start_time = pygame.time.get_ticks()
-        global_events.draw_signal.add(self.fade_out_draw)
+        global_events.draw_signal.add(self.fade_out_draw, -99)  # Draw the fade out last
 
     def fade_out_draw(self, screen):
         # draw a black rectangle over the screen
