@@ -9,7 +9,7 @@ from game.enemy_ship_basic import EnemyShipBasic
 from game.player_ship import PlayerShip
 from game.powerup_container import PowerupContainer
 from game.starfield_background import StarFieldBackground
-from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_screen
+from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_screen, update_current_game_level
 from global_events import all_enemies_destroyed
 from scenes.base_scene import BaseScene
 
@@ -47,6 +47,7 @@ class MainGameScene(BaseScene):
 
     def on_all_enemies_destroyed(self):
         self._current_level += 1
+        update_current_game_level(self._current_level)
         self.trigger_next_wave()
 
     def trigger_next_wave(self):

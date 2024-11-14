@@ -5,7 +5,7 @@ from game.collision_type_set import CollisionTypeSet, CollisionType
 from game.damageable_game_object import DamageableGameObject
 from game.enemy_projectile_basic import EnemyProjectileBasic
 import global_events
-from global_services import get_enemy_manager, get_screen
+from global_services import get_enemy_manager, get_screen, get_current_game_level
 import random
 
 from renderable import Renderable
@@ -24,9 +24,9 @@ class EnemyShipBasic(DamageableGameObject):
         self.y: float = random.uniform(self.rect.height / 2, get_screen().get_rect().height / 3)
 
         # Unit stats
-        self.health = 3
-        self.seconds_between_shots_min = 2
-        self.seconds_between_shots_max = 12
+        self.health = 3 + (get_current_game_level() / 6)
+        self.seconds_between_shots_min = 2 - min(1.5, get_current_game_level() / 3)
+        self.seconds_between_shots_max = 12 - min(10, get_current_game_level() / 3)
         self.set_time_for_next_shot()
 
         # Sound effect

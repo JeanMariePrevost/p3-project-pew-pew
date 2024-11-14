@@ -12,7 +12,7 @@ class EnemyProjectileBasic(Projectile):
         super().__init__(
             spawn_x,
             spawn_y,
-            speed=4,
+            speed=4 + global_services.get_current_game_level() / 6,
             direction_in_degrees=direction,
             image_asset_path="assets/laserRed04_edited.png",
         )

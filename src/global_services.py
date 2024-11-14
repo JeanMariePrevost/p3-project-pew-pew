@@ -84,6 +84,17 @@ def event_occured_this_tick(event_type):
 __enemy_manager = EnemyManager()
 __collision_manager = CollisionManager()
 
+__current_game_level = 0
+
+
+def update_current_game_level(level):
+    global __current_game_level
+    __current_game_level = level
+
+
+def get_current_game_level():
+    return __current_game_level
+
 
 def get_enemy_manager() -> EnemyManager:
     return __enemy_manager
