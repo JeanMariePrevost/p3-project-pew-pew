@@ -63,7 +63,7 @@ class MainGameScene(BaseScene):
         print("Player died, game over!")
         # fade ther music out
         pygame.mixer.music.fadeout(3000)
-        self.destroy()
+        self.fade_out()
 
     def trigger_next_wave(self):
         # TODO Implement a more complex wave system
