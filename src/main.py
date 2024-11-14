@@ -1,5 +1,6 @@
 import pygame
 import sys
+from game import memory_debugger
 import global_events
 from global_services import event_occured_this_tick, get_screen, clock_tick, update_events_for_current_tick
 from scenes.base_scene import BaseScene
@@ -24,6 +25,10 @@ def run_core_game_loop():
         if event_occured_this_tick(pygame.QUIT):
             print("Quit event detected, exiting game loop")
             running = False
+
+        # DEBUG - press F1 to print all objects using gc
+        if event_occured_this_tick(pygame.KEYDOWN) and pygame.key.get_pressed()[pygame.K_F1]:
+            memory_debugger.print_debug_info()
 
         if current_scene is not None:
             current_scene.tick()
