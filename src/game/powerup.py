@@ -1,4 +1,5 @@
 from animated_renderable import AnimatedRenderable
+from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
 import global_events
 import global_services
@@ -12,6 +13,7 @@ class Powerup(GameObject):
         self.rect.centery = y
         # print("Powerup spawned at", x, y)
         self.set_scale(0.7)
+        self.set_collision_types(collision_class=CollisionType.POWERUP, collision_targets=CollisionTypeSet(CollisionType.PLAYER))
         global_events.tick_signal.add(self.tick)
         global_events.draw_signal.add(self.draw)
 
@@ -22,18 +24,9 @@ class Powerup(GameObject):
             self.destroy()
         # print(f"Powerup at {self.rect.x}, {self.rect.y}")
 
-    def destroy(self):
-        global_events.tick_signal.remove(self.tick)
-        global_events.draw_signal.remove(self.draw)
-
-    # def draw(self, screen):
-    #     screen.blit(self.image, self.rect)
-
-    # def handle_collision(self, player):
-    #     if self.rect.colliderect(player.rect):
-    #         if self.powerup_type == "health":
-    #             player.health += 1
-    #         elif self.powerup_type == "shield":
-    #             player.shield += 1
-    #         elif self.powerup_type == "laser":
-    #             player.laser_level +=
+    def on_collision_with_target(self, other):
+        if other == global_services.get_player():
+            print("Player collided with powerup")
+            global_events.item_collected_by_player.trigger(self)
+            self.destroy()
+        return super().on_collision_with_target(other)

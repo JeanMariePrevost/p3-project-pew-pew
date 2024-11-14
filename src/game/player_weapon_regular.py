@@ -1,6 +1,8 @@
 import pygame
 
 from game.player_projectile_regular import PlayerProjectileRegular
+from game.powerup import Powerup
+import global_events
 
 
 class PlayerWeaponBasic:
@@ -13,6 +15,11 @@ class PlayerWeaponBasic:
         self.time_at_last_shot = 0
         self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
         # self.sound.set_volume(0.05)
+        global_events.item_collected_by_player.add(self.on_item_collected_by_player)
+
+    def on_item_collected_by_player(self, item_object):
+        if isinstance(item_object, Powerup):
+            print("Player weapon upgraded!")
 
     def tick(self, player_x, player_y):
         # Check if the spacebar or LMB are currently pressed
