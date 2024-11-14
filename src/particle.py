@@ -30,6 +30,7 @@ class Particle(GameObject):
     def destroy(self):
         global_events.tick_signal.remove(self.tick)
         global_events.draw_signal.remove(self.draw)
+        super().destroy()
 
     # def draw(self, screen):
     #     self.renderable.x = self.x

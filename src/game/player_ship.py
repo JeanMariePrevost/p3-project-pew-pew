@@ -1,8 +1,9 @@
 import os
 import pygame
+from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
 from game.player_weapon_regular import PlayerWeaponBasic
-from global_services import get_screen, event_occured_this_tick, set_player
+import global_services
 from renderable import Renderable
 
 
@@ -15,13 +16,14 @@ class PlayerShip(GameObject):
         self.using_mouse_controls: bool = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
         self.weapon: PlayerWeaponBasic = PlayerWeaponBasic()
         super().__init__(Renderable("assets/playerShip1_blue.png"))
-        set_player(self)
+        self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
+        global_services.set_player(self)
 
     def tick(self):
         global using_mouse_controls
-        if event_occured_this_tick(pygame.MOUSEMOTION) or event_occured_this_tick(pygame.MOUSEBUTTONDOWN):
+        if global_services.event_occured_this_tick(pygame.MOUSEMOTION) or global_services.event_occured_this_tick(pygame.MOUSEBUTTONDOWN):
             self.using_mouse_controls = True
-        elif event_occured_this_tick(pygame.KEYDOWN):
+        elif global_services.event_occured_this_tick(pygame.KEYDOWN):
             self.using_mouse_controls = False
 
         if self.using_mouse_controls:
@@ -33,7 +35,7 @@ class PlayerShip(GameObject):
         self.rect.center = self.x, self.y
 
         # Restrict ship position to screen bounds
-        screen_rect = get_screen().get_rect()
+        screen_rect = global_services.get_screen().get_rect()
         self.rect.clamp_ip(screen_rect)
 
         # HACK: prevent self.x and self.y from drifting too far outside the screen, since they aren't clamped but the rect is

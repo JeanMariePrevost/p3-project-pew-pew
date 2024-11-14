@@ -1,6 +1,7 @@
 import os
 import pygame
 
+from game.collision_type_set import CollisionTypeSet, CollisionType
 from game.damageable_game_object import DamageableGameObject
 from game.enemy_projectile_basic import EnemyProjectileBasic
 import global_events
@@ -31,6 +32,8 @@ class EnemyShipBasic(DamageableGameObject):
         # Sound effect
         self.sound = pygame.mixer.Sound("assets/Laser_shoot 123.wav")
         self.sound.set_volume(2)
+
+        self.set_collision_types(collision_class=CollisionType.ENEMY, collision_targets=None)
 
         # Register with the enemy manager
         get_enemy_manager().add_enemy(self)
@@ -69,4 +72,4 @@ class EnemyShipBasic(DamageableGameObject):
 
     def destroy(self):
         get_enemy_manager().remove_enemy(self)
-        del self
+        super().destroy()

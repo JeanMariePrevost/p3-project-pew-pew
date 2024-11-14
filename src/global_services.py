@@ -12,7 +12,7 @@ make dependencies available to all other modules without having to pass them aro
 
 import pygame
 
-from game.colision_manager import CollisionManager
+from game.collision_manager import CollisionManager
 from game.enemy_manager import EnemyManager
 from game.projectile_manager import ProjectileManager
 from util.signal import Signal
@@ -88,13 +88,13 @@ __enemy_manager = EnemyManager()
 __collision_manager = CollisionManager()
 
 
-def get_projectile_manager():
+def get_projectile_manager() -> ProjectileManager:
     return __projectile_manager
 
 
-def get_enemy_manager():
+def get_enemy_manager() -> EnemyManager:
     return __enemy_manager
 
 
-def get_collision_manager():
+def get_collision_manager() -> CollisionManager:
     return __collision_manager

@@ -5,7 +5,6 @@ of the game, ensuring that all game components interact correctly and the game
 progresses smoothly.
 """
 
-from animation import Animation
 from game.enemy_ship_basic import EnemyShipBasic
 from game.player_ship import PlayerShip
 from game.powerup_container import PowerupContainer

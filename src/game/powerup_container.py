@@ -19,9 +19,6 @@ class PowerupContainer(EnemyShipBasic):
         self.health = 1
         self.set_scale(0.66)
 
-        # global_events.tick_signal.add(self.tick)
-        # global_events.draw_signal.add(self.draw)
-
     def fire(self):
         # Disable firing
         pass
@@ -30,7 +27,3 @@ class PowerupContainer(EnemyShipBasic):
         # TODO: Implement powerup spawning
         Powerup(self.x, self.y)
         return super().on_health_depleted()
-
-    # def destroy(self):
-    # global_events.tick_signal.remove(self.tick)
-    # global_events.draw_signal.remove(self.draw)
