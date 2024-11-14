@@ -18,6 +18,7 @@ class PlayerWeaponBasic:
         self.time_at_last_shot = 0
         self.level = 1
         self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
+        self.sound.set_volume(0.4)
         self._next_weapon_class = PlayerWeaponBasic2
         self._previous_weapon_class = None
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)

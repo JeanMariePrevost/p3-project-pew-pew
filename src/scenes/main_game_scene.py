@@ -5,6 +5,7 @@ of the game, ensuring that all game components interact correctly and the game
 progresses smoothly.
 """
 
+import pygame
 from game.enemy_ship_basic import EnemyShipBasic
 from game.gui_power_bar import GuiPowerBar
 from game.game_score import GameScore
@@ -22,6 +23,9 @@ class MainGameScene(BaseScene):
         self._current_level = 1
         self.player_ship = PlayerShip()
         self.bg = StarFieldBackground(get_screen())
+        pygame.mixer.music.load("assets/stg_st008_88pro-loop.ogg")
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play(-1)  # -1 means loop indefinitely
 
         all_enemies_destroyed.add(self.on_all_enemies_destroyed)
 
@@ -44,7 +48,8 @@ class MainGameScene(BaseScene):
         get_enemy_manager().draw(screen)
 
     def destroy(self):
-        # Currently doesn't need to do anything beyond stop ticking, which is already handled by the main loop
+        # Currently doesn't need to do much beyond stop ticking, which is already handled by the main loop
+        pygame.mixer.music.stop()
         pass
 
     def on_all_enemies_destroyed(self):
