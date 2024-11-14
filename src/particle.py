@@ -1,6 +1,5 @@
 from animated_renderable import AnimatedRenderable
 from game.game_object import GameObject
-import global_events
 
 
 class Particle(GameObject):
@@ -12,9 +11,6 @@ class Particle(GameObject):
         super().__init__(animated_renderable)
         self.rect.x = x
         self.rect.y = y
-
-        global_events.tick_signal.add(self.tick)
-        global_events.draw_signal.add(self.draw)
 
     def tick(self):
         super().tick()
