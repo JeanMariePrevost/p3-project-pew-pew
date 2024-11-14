@@ -2,7 +2,7 @@ import os
 import pygame
 from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
-from game.player_weapon_regular import PlayerWeaponBasic
+from game.player_weapon_basic import PlayerWeaponBasic
 import global_services
 from renderable import Renderable
 
@@ -14,10 +14,17 @@ class PlayerShip(GameObject):
         self.x: float = 0  # Needed because rect use integers only, think subpixels on the NES
         self.y: float = 0
         self.using_mouse_controls: bool = False  # Dynamically changes control style. Tru when the mouse is moved or clicked, False when a key is pressed
-        self.weapon: PlayerWeaponBasic = PlayerWeaponBasic()
         super().__init__(Renderable("assets/playerShip1_blue.png"))
+        self.change_weapon(PlayerWeaponBasic(self))
         self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
         global_services.set_player(self)
+
+    def change_weapon(self, weapon):
+        print(f"PlayerShip has weapon: {hasattr(self, '_weapon')}")
+        if hasattr(self, "_weapon"):
+            self._weapon.destroy()
+        self._weapon = weapon
+        print("Weapon changed to", weapon)
 
     def tick(self):
         global using_mouse_controls
@@ -46,7 +53,7 @@ class PlayerShip(GameObject):
             self.y = center_y
 
         # Weapon logic
-        self.weapon.tick(self.x, self.y)
+        self._weapon.tick(self.x, self.y)
 
     def calculate_position_using_mouse_controls(self):
         # Set position based on mouse cursor

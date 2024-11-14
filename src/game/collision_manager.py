@@ -28,7 +28,6 @@ class CollisionManager:
         # TODO: Implement player colliding with enemies
 
         # Check for collisions between every registerd object in collidable_objects
-        print(f"Checking {len(self.collidable_objects)} objects for collisions")
         for game_object in self.collidable_objects:
             for other in self.collidable_objects:
                 if game_object == other:
