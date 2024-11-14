@@ -8,6 +8,7 @@ progresses smoothly.
 from game.enemy_ship_basic import EnemyShipBasic
 from game.player_ship import PlayerShip
 from game.powerup_container import PowerupContainer
+from game.starfield_background import StarFieldBackground
 from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_screen
 from global_events import all_enemies_destroyed
 from scenes.base_scene import BaseScene
@@ -18,6 +19,7 @@ class MainGameScene(BaseScene):
         print("MainGameScene initialized")
         self._current_level = 1
         self.player_ship = PlayerShip()
+        self.bg = StarFieldBackground(get_screen())
 
         all_enemies_destroyed.add(self.on_all_enemies_destroyed)
 
@@ -25,8 +27,7 @@ class MainGameScene(BaseScene):
 
     def tick(self):
         # Core game loop
-        screen = get_screen()
-        screen.fill(BG_COLOR)  # Fill the background to "refresh" the screen
+        self.bg.tick()
 
         self.player_ship.tick()
 
@@ -34,6 +35,9 @@ class MainGameScene(BaseScene):
         get_collision_manager().tick()
 
     def draw(self, screen):
+        screen = get_screen()
+        screen.fill(BG_COLOR)  # Fill the background to "refresh" the screen
+        self.bg.draw()
         get_enemy_manager().draw(screen)
         self.player_ship.draw(screen)
 
