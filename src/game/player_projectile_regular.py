@@ -26,7 +26,10 @@ class PlayerProjectileRegular(Projectile):
             self.hit_damageable_object(other)
 
     def hit_damageable_object(self, damageable_object):
+        self.spawn_hit_particle()
+        super().hit_damageable_object(damageable_object)
+
+    def spawn_hit_particle(self):
         animation = AnimatedRenderable("assets/Simple explosion", loop=False, ticks_per_frame=3, auto_tick=True)
         hit_particle = Particle(self.rect.centerx, self.rect.centery, animation)
         hit_particle.set_scale(0.5)
-        return super().hit_damageable_object(damageable_object)
