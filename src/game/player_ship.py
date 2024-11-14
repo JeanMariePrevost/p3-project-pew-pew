@@ -18,6 +18,9 @@ class PlayerShip(GameObject):
         super().__init__(Renderable("assets/playerShip1_blue.png"))
         self.change_weapon(PlayerWeaponBasic(self))
         self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
+
+        self.sound_take_damage = pygame.mixer.Sound("assets/SpaceGunFire.wav")
+
         global_services.set_player(self)
         global_events.player_took_damage.add(self.on_player_took_damage)
 
@@ -32,6 +35,7 @@ class PlayerShip(GameObject):
     def on_player_took_damage(self, enemy_projectile):
         print("Player took damage!")
         if self._weapon.level > 1:
+            self.sound_take_damage.play()
             self._weapon.decresase_level()
         else:
             print("Player has no more lives, game over")
