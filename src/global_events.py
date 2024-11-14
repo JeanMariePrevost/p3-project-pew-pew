@@ -13,7 +13,7 @@ draw_signal = Signal()
 
 
 # Main game event signals
-enemy_destroyed = Signal()
-all_enemies_destroyed = Signal()
-item_collected_by_player = Signal()
-player_weapon_changed = Signal()
+enemy_destroyed = Signal()  # payload: EnemyShipBasic
+all_enemies_destroyed = Signal()  # payload: None
+item_collected_by_player = Signal()  # payload: Powerup
+player_weapon_changed = Signal()  # payload: PlayerWeaponBasic

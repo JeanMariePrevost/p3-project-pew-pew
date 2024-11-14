@@ -25,6 +25,7 @@ class EnemyShipBasic(DamageableGameObject):
 
         # Unit stats
         self.health = 3 + (get_current_game_level() / 6)
+        self.score_value = 100
         self.seconds_between_shots_min = 2 - min(1.5, get_current_game_level() / 3)
         self.seconds_between_shots_max = 12 - min(10, get_current_game_level() / 3)
         self.set_time_for_next_shot()
