@@ -15,6 +15,7 @@ class GameObject:
         self.rect = self.renderable.get_rect()
         self.hit_mask = self.renderable.get_collision_mask()
         self.was_destroyed = False
+        self._draw_signal_priority = 0
         if not hasattr(self, "collision_class"):
             self.__collision_class = CollisionTypeSet()  # By default, a GameObject won't be collidable with anything
 
@@ -31,7 +32,7 @@ class GameObject:
     def register_to_draw_signal_on_first_tick(self):
         global_events.tick_signal.remove(self.register_to_draw_signal_on_first_tick)
         if not self.was_destroyed:
-            global_events.draw_signal.add(self.draw)
+            global_events.draw_signal.add(self.draw, self._draw_signal_priority)
 
     def set_collision_types(self, collision_class: CollisionType = None, collision_targets: CollisionTypeSet = None):
         assert isinstance(collision_class, CollisionType) or collision_class is None

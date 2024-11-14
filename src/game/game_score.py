@@ -13,6 +13,7 @@ class GameScore(GameObject):
         super().__init__(text_renderable)
         self.score = 0
         self.refresh_text_from_score()
+        self._draw_signal_priority = -10
 
         global_events.enemy_destroyed.add(self.on_enemy_destroyed)
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)
