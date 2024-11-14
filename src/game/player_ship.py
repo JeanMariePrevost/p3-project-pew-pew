@@ -1,10 +1,12 @@
 import os
 import pygame
+from animated_renderable import AnimatedRenderable
 from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
 from game.player_weapon_basic import PlayerWeaponBasic
 import global_events
 import global_services
+from particle import Particle
 from renderable import Renderable
 
 
@@ -20,6 +22,7 @@ class PlayerShip(GameObject):
         self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
 
         self.sound_take_damage = pygame.mixer.Sound("assets/SpaceGunFire.wav")
+        self.sound_death = pygame.mixer.Sound("assets/MissileLaunch.wav")
 
         global_services.set_player(self)
         global_events.player_took_damage.add(self.on_player_took_damage)
@@ -38,7 +41,12 @@ class PlayerShip(GameObject):
             self.sound_take_damage.play()
             self._weapon.decresase_level()
         else:
+            self.sound_death.play()
+            animation = AnimatedRenderable("assets/Simple explosion", loop=False, ticks_per_frame=5, auto_tick=True)
+            hit_particle = Particle(self.rect.centerx, self.rect.centery, animation)
+            hit_particle.set_scale(2)
             print("Player has no more lives, game over")
+            self.destroy()
 
     def tick(self):
         global using_mouse_controls
@@ -86,3 +94,7 @@ class PlayerShip(GameObject):
             self.y -= self.speed
         if keys[pygame.K_DOWN] or keys[pygame.K_s]:
             self.y += self.speed
+
+    def destroy(self):
+        global_events.player_took_damage.remove(self.on_player_took_damage)
+        super().destroy()

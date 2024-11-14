@@ -34,8 +34,6 @@ class MainGameScene(BaseScene):
         # Core game loop
         self.bg.tick()
 
-        self.player_ship.tick()
-
         get_enemy_manager().tick()
         get_collision_manager().tick()
 
@@ -44,7 +42,6 @@ class MainGameScene(BaseScene):
         screen.fill(BG_COLOR)  # Fill the background to "refresh" the screen
         self.bg.draw()
         get_enemy_manager().draw(screen)
-        self.player_ship.draw(screen)
 
     def destroy(self):
         # Currently doesn't need to do anything beyond stop ticking, which is already handled by the main loop
