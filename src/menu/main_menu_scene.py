@@ -1,5 +1,6 @@
 import pygame
 from game.game_object import GameObject
+from game.starfield_background import StarFieldBackground
 import global_services
 from menu.button import Button
 from renderable import Renderable
@@ -31,7 +32,8 @@ class MainMenuScene(BaseScene):
         self.exit.rect.centerx = global_services.get_screen().get_width() / 2
         self.exit.rect.y = self.play_button.rect.y + 70 * 3
         self.exit.clicked_signal.add(self.on_exit_button_clicked)
-        pass
+
+        self.startfield_bg = StarFieldBackground(global_services.get_screen())
 
     def on_play_button_clicked(self, button):
         print("Play button clicked on main menu")
@@ -47,9 +49,9 @@ class MainMenuScene(BaseScene):
         pygame.event.post(pygame.event.Event(pygame.QUIT))
 
     def tick(self):
-        pass
+        self.startfield_bg.tick()
 
     def draw(self, screen):
         # Clear sceen with black
         screen.fill((0, 0, 0))
-        pass
+        self.startfield_bg.draw()
