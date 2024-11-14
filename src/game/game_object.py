@@ -1,4 +1,5 @@
 from game.collision_type_set import CollisionType, CollisionTypeSet
+import global_events
 import global_services
 from renderable import Renderable
 
@@ -18,6 +19,9 @@ class GameObject:
 
         if not hasattr(self, "collision_targets"):
             self.__collision_targets = CollisionTypeSet()  # By default, a GameObject won't collide with anything
+
+        global_events.tick_signal.add(self.tick)
+        global_events.draw_signal.add(self.draw)
 
         global_services.get_collision_manager().add_game_object(self)
 
@@ -43,6 +47,8 @@ class GameObject:
 
     def destroy(self):
         global_services.get_collision_manager().remove_game_object(self)
+        global_events.tick_signal.remove(self.tick)
+        global_events.draw_signal.remove(self.draw)
 
     def set_scale(self, scale):
         self.renderable.set_scale(scale)

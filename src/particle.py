@@ -26,13 +26,3 @@ class Particle(GameObject):
         offset_rect.x -= self.renderable.get_final_image().get_width() // 2
         offset_rect.y -= self.renderable.get_final_image().get_height() // 2
         screen.blit(self.renderable.get_final_image(), offset_rect)
-
-    def destroy(self):
-        global_events.tick_signal.remove(self.tick)
-        global_events.draw_signal.remove(self.draw)
-        super().destroy()
-
-    # def draw(self, screen):
-    #     self.renderable.x = self.x
-    #     self.renderable.y = self.y
-    #     self.renderable.draw(screen)

@@ -14,8 +14,6 @@ import pygame
 
 from game.collision_manager import CollisionManager
 from game.enemy_manager import EnemyManager
-from game.projectile_manager import ProjectileManager
-from util.signal import Signal
 
 
 # Constants
@@ -83,13 +81,8 @@ def event_occured_this_tick(event_type):
 # Specific to the main game scene
 
 
-__projectile_manager = ProjectileManager()
 __enemy_manager = EnemyManager()
 __collision_manager = CollisionManager()
-
-
-def get_projectile_manager() -> ProjectileManager:
-    return __projectile_manager
 
 
 def get_enemy_manager() -> EnemyManager:

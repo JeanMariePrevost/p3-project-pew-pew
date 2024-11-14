@@ -11,7 +11,10 @@ class Signal:
         self.observers.add(target_function)
 
     def remove(self, target_function):
-        self.observers.remove(target_function)
+        if target_function in self.observers:
+            self.observers.remove(target_function)
+        else:
+            print(f"Warning: Tried to remove {target_function} from signal, but it wasn't there.")
 
     def remove_all(self):
         self.observers.clear()

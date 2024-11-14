@@ -18,9 +18,11 @@ class EnemyManager:
             all_enemies_destroyed.trigger()
 
     def tick(self):
-        for enemy in self.enemies:
-            enemy.tick()
+        # for enemy in self.enemies:
+        # enemy.tick()
+        pass
 
     def draw(self, screen):
-        for enemy in self.enemies:
-            enemy.draw(screen)
+        # for enemy in self.enemies:
+        # enemy.draw(screen)
+        pass
