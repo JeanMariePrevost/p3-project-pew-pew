@@ -7,9 +7,10 @@ from util.signal import Signal
 
 
 class Button(GameObject):
-    def __init__(self, text: str, renderable: Renderable):
+    def __init__(self, text: str, renderable: Renderable, click_sound_path=None):
         super().__init__(Renderable("assets/button_bg.png"))
         self.text_renderable = RenderableText(text, "assets/fonts/Roboto-Bold.ttf", 24, (255, 255, 255))
+        self.click_sound = pygame.mixer.Sound(click_sound_path) if click_sound_path is not None else None
         self.hovered_by_mouse = False
         self.held_down = False
         self.clicked_signal = Signal()
@@ -24,6 +25,8 @@ class Button(GameObject):
         if global_services.event_occured_this_tick(pygame.MOUSEBUTTONUP):
             if self.held_down and self.hovered_by_mouse:
                 print("Button clicked")
+                if self.click_sound is not None:
+                    self.click_sound.play()
                 self.clicked_signal.trigger(self)
             self.held_down = False
 
