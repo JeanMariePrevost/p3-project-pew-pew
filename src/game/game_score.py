@@ -16,6 +16,7 @@ class GameScore(GameObject):
 
         global_events.enemy_destroyed.add(self.on_enemy_destroyed)
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)
+        global_events.powerup_collected_when_weapon_maxed.add(self.on_powerup_collected_when_weapon_maxed)
 
     def on_enemy_destroyed(self, enemy_ship_object: EnemyShipBasic):
         self.score += enemy_ship_object.score_value
@@ -23,6 +24,10 @@ class GameScore(GameObject):
 
     def on_item_collected_by_player(self, item: Powerup):
         self.score += 150
+        self.refresh_text_from_score()
+
+    def on_powerup_collected_when_weapon_maxed(self):
+        self.score += 500
         self.refresh_text_from_score()
 
     def refresh_text_from_score(self):
