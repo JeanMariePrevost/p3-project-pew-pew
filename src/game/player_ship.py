@@ -31,7 +31,10 @@ class PlayerShip(GameObject):
 
     def on_player_took_damage(self, enemy_projectile):
         print("Player took damage!")
-        self._weapon
+        if self._weapon.level > 1:
+            self._weapon.decresase_level()
+        else:
+            print("Player has no more lives, game over")
 
     def tick(self):
         global using_mouse_controls
