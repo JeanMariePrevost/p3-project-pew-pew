@@ -15,7 +15,8 @@ def initial_setup():
     pygame.init()
     pygame.mixer.init()
     # change_scene(MainGameScene())
-    change_scene(MainMenuScene())
+    # change_scene(MainMenuScene())
+    start_scene_transition(None, MainMenuScene, fadeout_ms=0, pause_ms=0, fadein_ms=300)
     print("Initial setup complete")
 
 
@@ -46,6 +47,24 @@ def run_core_game_loop():
     print("Core loop exited, quitting Pygame")
     pygame.quit()
     sys.exit()
+
+
+def start_scene_transition(from_scene: BaseScene | None, target_scene_class: type, fadeout_ms: int = 300, pause_ms=300, fadein_ms: int = 300):
+    assert isinstance(from_scene, BaseScene) or from_scene is None
+    assert isinstance(target_scene_class, type)
+    if from_scene is not None:
+        from_scene.fade_out_complete_signal.add_once(lambda: finish_scene_transition(target_scene_class, pause_ms, fadein_ms))
+        from_scene.fade_out_then_destroy(fadeout_ms)
+    else:
+        finish_scene_transition(target_scene_class, pause_ms, fadein_ms)
+
+
+def finish_scene_transition(target_scene_class, pause_ms, fadein_ms):
+    # Pause for a moment before fading in
+    pygame.time.wait(pause_ms)
+    target_scene = target_scene_class()
+    change_scene(target_scene)
+    target_scene.fade_in(fadein_ms)
 
 
 def change_scene(new_scene: BaseScene):

@@ -36,6 +36,21 @@ class Signal:
         # Sort on priority
         self.observers.sort(key=lambda x: x[0], reverse=True)
 
+    def add_once(self, target_function, priority=0):
+        """
+        Add a function to the list of observers, but remove it after the first call.
+        :param target_function: The function to call when the signal is triggered.
+        :param priority: The order of execution, higher priority functions are called first.
+        """
+
+        # Define a wrapper that removes the target function after it's called
+        def one_time_wrapper(*args, **kwargs):
+            target_function(*args, **kwargs)
+            self.remove(one_time_wrapper)  # Remove itself after the first call
+
+        # Add the wrapper function instead of the original
+        self.add(one_time_wrapper, priority)
+
     def remove(self, target_function):
         # Find and remove the function, preserving the sorted structure
         self.observers = [(priority, func) for priority, func in self.observers if func != target_function]

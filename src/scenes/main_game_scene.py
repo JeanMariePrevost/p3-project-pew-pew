@@ -5,6 +5,7 @@ of the game, ensuring that all game components interact correctly and the game
 progresses smoothly.
 """
 
+from ast import main
 import pygame
 from game.enemy_ship_basic import EnemyShipBasic
 from game.gui_power_bar import GuiPowerBar
@@ -19,6 +20,7 @@ from scenes.base_scene import BaseScene
 
 class MainGameScene(BaseScene):
     def __init__(self):
+        super().__init__()
         print("MainGameScene initialized")
         self._current_level = 1
         self.player_ship = PlayerShip()
@@ -59,11 +61,13 @@ class MainGameScene(BaseScene):
         self.trigger_next_wave()
 
     def on_player_death(self):
+        import main
+
         # TODO Implement game over screen
         print("Player died, game over!")
         # fade ther music out
         pygame.mixer.music.fadeout(3000)
-        self.fade_out()
+        main.start_scene_transition(self, main.MainMenuScene, fadeout_ms=3000, pause_ms=1000, fadein_ms=1000)
 
     def trigger_next_wave(self):
         # TODO Implement a more complex wave system
