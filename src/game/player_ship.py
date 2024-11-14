@@ -3,6 +3,7 @@ import pygame
 from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
 from game.player_weapon_basic import PlayerWeaponBasic
+import global_events
 import global_services
 from renderable import Renderable
 
@@ -24,6 +25,7 @@ class PlayerShip(GameObject):
         if hasattr(self, "_weapon"):
             self._weapon.destroy()
         self._weapon = weapon
+        global_events.player_weapon_changed.trigger(weapon)
         print("Weapon changed to", weapon)
 
     def tick(self):

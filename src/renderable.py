@@ -73,6 +73,3 @@ class Renderable:
 
     def destroy(self):
         pass
-
-    # def draw(self, screen):
-    #     screen.blit(self._final_image, self.rect)

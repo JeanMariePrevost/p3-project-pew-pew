@@ -6,6 +6,7 @@ progresses smoothly.
 """
 
 from game.enemy_ship_basic import EnemyShipBasic
+from game.gui_power_bar import GuiPowerBar
 from game.player_ship import PlayerShip
 from game.powerup_container import PowerupContainer
 from game.starfield_background import StarFieldBackground
@@ -22,6 +23,8 @@ class MainGameScene(BaseScene):
         self.bg = StarFieldBackground(get_screen())
 
         all_enemies_destroyed.add(self.on_all_enemies_destroyed)
+
+        self.gui_power_bar = GuiPowerBar()
 
         self.trigger_next_wave()
 

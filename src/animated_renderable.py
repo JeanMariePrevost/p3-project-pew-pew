@@ -54,6 +54,10 @@ class AnimatedRenderable(Renderable):
                 self._current_frame = len(self._frames) - 1
         self.refresh_final_image()
 
+    def set_current_frame(self, frame):
+        self._current_frame = frame
+        self.refresh_final_image()
+
     def set_scale(self, scale):
         # TODO : Implement scaling across frames, or dynamically for each current frame?
         super().set_scale(scale)

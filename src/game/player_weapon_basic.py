@@ -12,8 +12,9 @@ class PlayerWeaponBasic:
 
     def __init__(self, player_ship) -> None:
         self.player_ship = player_ship
-        self.seconds_betwen_shots = 0.1
+        self.seconds_betwen_shots = 0.4
         self.time_at_last_shot = 0
+        self.level = 1
         self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
         # self.sound.set_volume(0.05)
         global_events.item_collected_by_player.add(self.on_item_collected_by_player)

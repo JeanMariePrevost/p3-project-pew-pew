@@ -10,19 +10,25 @@ class PlayerWeaponBasic4(PlayerWeaponBasic):
 
     def __init__(self, player_ship) -> None:
         super().__init__(player_ship)
-        self.seconds_betwen_shots = 0.1
+        self.seconds_betwen_shots = 0.17
+        self.level = 4
+        self.on_left_shot = True
 
     def on_item_collected_by_player(self, item_object):
+        from game.player_weapon_basic5 import PlayerWeaponBasic5
+
         if isinstance(item_object, Powerup):
-            # self.player_ship.change_weapon(PlayerWeaponBasic2(self.player_ship))
-            # TODO : Level 3 weapon
-            print("Player weapon maxed! (TODO)")
+            self.player_ship.change_weapon(PlayerWeaponBasic5(self.player_ship))
 
     def fire(self, player_x, player_y):
         self.time_at_last_shot = pygame.time.get_ticks()
         self.sound.play()
-        PlayerProjectileRegular(player_x - 15, player_y + 5, -97)
-        PlayerProjectileRegular(player_x, player_y, -90)
-        PlayerProjectileRegular(player_x + 15, player_y + 5, -83)
-        PlayerProjectileRegularWeak(player_x - 30, player_y + 20, -110)
-        PlayerProjectileRegularWeak(player_x + 30, player_y + 20, -70)
+
+        if self.on_left_shot:
+            PlayerProjectileRegular(player_x + 18, player_y, -90)
+            PlayerProjectileRegularWeak(player_x - 30, player_y + 20, -100)
+            self.on_left_shot = False
+        else:
+            PlayerProjectileRegular(player_x - 18, player_y, -90)
+            PlayerProjectileRegularWeak(player_x + 30, player_y + 20, -80)
+            self.on_left_shot = True
