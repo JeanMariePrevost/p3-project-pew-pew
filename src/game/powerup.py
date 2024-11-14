@@ -1,17 +1,21 @@
+import pygame
 from animated_renderable import AnimatedRenderable
 from game.collision_type_set import CollisionType, CollisionTypeSet
 from game.game_object import GameObject
 import global_events
 import global_services
+from renderable_flash_wrapper import RenderableFlashWrapper
 
 
 class Powerup(GameObject):
+
     def __init__(self, x, y):
         renderable = AnimatedRenderable("assets/powerup", loop=True, ticks_per_frame=4, auto_tick=True)
         super().__init__(renderable)
         self.rect.centerx = x
         self.rect.centery = y
         # print("Powerup spawned at", x, y)
+        self.pickup_sound = pygame.mixer.Sound("assets/NewAbilityOrUpgradeAvailable.wav")
         self.set_scale(0.7)
         self.set_collision_types(collision_class=CollisionType.POWERUP, collision_targets=CollisionTypeSet(CollisionType.PLAYER))
         global_events.tick_signal.add(self.tick)
@@ -28,5 +32,7 @@ class Powerup(GameObject):
         if other == global_services.get_player():
             print("Player collided with powerup")
             global_events.item_collected_by_player.trigger(self)
+            RenderableFlashWrapper(global_services.get_player().renderable, (80, 255, 80), 0.8, 28)
+            self.pickup_sound.play()
             self.destroy()
         return super().on_collision_with_target(other)
