@@ -18,6 +18,7 @@ class PlayerProjectileRegular(Projectile):
             direction_in_degrees=direction,
             image_asset_path="assets/laserGreen08.png",
         )
+        self.renderable.set_rotation(90 - direction)
         self.set_collision_types(collision_class=CollisionType.PLAYER_SHOT, collision_targets=CollisionTypeSet(CollisionType.ENEMY, CollisionType.POWERUP))
 
     def on_collision_with_target(self, other):
