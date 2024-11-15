@@ -14,6 +14,7 @@ from game.powerup_container import PowerupContainer
 from game.starfield_background import StarFieldBackground
 from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_screen, update_current_game_level
 import global_events
+import global_services
 from menu.highscore_scene import HighscoreScene
 from scenes.base_scene import BaseScene
 
@@ -63,9 +64,8 @@ class MainGameScene(BaseScene):
     def on_player_death(self):
         import main
 
-        # TODO Implement game over screen
         print("Player died, game over!")
-        # fade ther music out
+        global_services.set_current_game_over_score(self.gui_score.score)
         pygame.mixer.music.fadeout(3000)
         main.start_scene_transition(self, HighscoreScene, fadeout_ms=3000, pause_ms=1000, fadein_ms=1000)
 

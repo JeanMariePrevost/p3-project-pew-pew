@@ -10,16 +10,16 @@ from scenes.base_scene import BaseScene
 class HighscoreScene(BaseScene):
 
     DEFAULT_HIGHSCORES = [
-        ("AAA", 999999),
-        ("ZZZ", 888888),
-        ("THEBOSS", 777777),
-        ("COINOP", 666666),
-        ("PLAYER1", 555555),
-        ("BILLYKID", 444444),
-        ("L00SER", 333333),
-        ("UHOH", 222222),
-        ("WHYME", 111111),
-        ("N00B", 100000),
+        ("AAA", 20000),
+        ("ZZZ", 16000),
+        ("THEBOSS", 14000),
+        ("COINOP", 12000),
+        ("PLAYER1", 10000),
+        ("BILLYKID", 7777),
+        ("L00SER", 5000),
+        ("UHOH", 2500),
+        ("WHYME", 1000),
+        ("N00B", 100),
     ]
 
     def __init__(self):
@@ -68,9 +68,10 @@ class HighscoreScene(BaseScene):
         self.back_button.rect.y = global_services.get_screen().get_height() - 100 - self.back_button.rect.height
         self.back_button.clicked_signal.add(self.on_back_button_clicked)
 
-        # bgm
-        # pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")
-        # pygame.mixer.music.play(-1)
+        # DEBUG - print received score
+        received_score = global_services.get_current_game_over_score()
+        print(f"Received score: {received_score}")
+        global_services.set_current_game_over_score(0)
 
     def read_scores_from_file(self):
         try:
@@ -86,10 +87,16 @@ class HighscoreScene(BaseScene):
             scores.append((name, int(score)))
         return scores
 
+    def write_scores_to_file(self):
+        with open("gamedata/highscores.dat", "w") as file:
+            for name, score in self.scores:
+                file.write(f"{name},{score}\n")
+
     def on_back_button_clicked(self, button):
         import main
 
         print("Back button clicked on highscores screen")
+        self.write_scores_to_file()
         # pygame.mixer.music.stop()
         main.start_scene_transition(self, main.MainMenuScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
 

@@ -114,3 +114,15 @@ def get_enemy_manager() -> EnemyManager:
 
 def get_collision_manager() -> CollisionManager:
     return __collision_manager
+
+
+__current_game_over_score = 0
+
+
+def set_current_game_over_score(score):
+    global __current_game_over_score
+    __current_game_over_score = score
+
+
+def get_current_game_over_score():
+    return __current_game_over_score
