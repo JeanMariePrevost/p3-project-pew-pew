@@ -62,10 +62,10 @@ class HighscoreScene(BaseScene):
 
         self.score_texts = [RenderableText(f"{i + 1}. {score}", "assets/fonts/Roboto-Bold.ttf", 24, (255, 255, 255)) for i, score in enumerate(self.scores)]
 
-        self.play_button = Button("Back", None, "assets/NotEnoughEnergy.wav")
-        self.play_button.rect.centerx = global_services.get_screen().get_width() / 2
-        self.play_button.rect.y = global_services.get_screen().get_height() - 100 - self.play_button.rect.height
-        self.play_button.clicked_signal.add(self.on_back_button_clicked)
+        self.back_button = Button("Back", None, "assets/NotEnoughEnergy.wav")
+        self.back_button.rect.centerx = global_services.get_screen().get_width() / 2
+        self.back_button.rect.y = global_services.get_screen().get_height() - 100 - self.back_button.rect.height
+        self.back_button.clicked_signal.add(self.on_back_button_clicked)
 
         # bgm
         # pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")

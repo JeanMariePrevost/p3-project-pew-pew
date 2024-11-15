@@ -3,6 +3,7 @@ from game.game_object import GameObject
 from game.starfield_background import StarFieldBackground
 import global_services
 from menu.button import Button
+from menu.credits_scene import CreditsScene
 from menu.highscore_scene import HighscoreScene
 from renderable import Renderable
 from scenes.base_scene import BaseScene
@@ -53,11 +54,13 @@ class MainMenuScene(BaseScene):
         import main
 
         print("Highscores button clicked on main menu")
-        # pygame.mixer.music.stop()
         main.start_scene_transition(self, HighscoreScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
 
     def on_credits_button_clicked(self, button):
+        import main
+
         print("Credits button clicked on main menu")
+        main.start_scene_transition(self, CreditsScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
 
     def on_exit_button_clicked(self, button):
         print("Exit button clicked on main menu")
