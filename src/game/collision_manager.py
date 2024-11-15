@@ -18,16 +18,13 @@ class CollisionManager:
         self.collidable_objects.append(game_object)
 
     def remove_game_object(self, game_object: GameObject):
-        if game_object in self.collidable_objects:
+        try:
             self.collidable_objects.remove(game_object)
-        else:
+        except ValueError:
             print(f"Warning: Tried to remove {game_object} from collision manager, but it wasn't there. Destroyed multiple times?")
 
     def check_all_collisions(self):
-
-        # TODO: Implement player colliding with enemies
-
-        # Check for collisions between every registerd object in collidable_objects
+        """Check for collisions between every registerd object in collidable_objects"""
         for game_object in self.collidable_objects:
             for other in self.collidable_objects:
                 if game_object == other:
