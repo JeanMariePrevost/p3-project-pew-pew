@@ -36,9 +36,6 @@ https://fonts.google.com/specimen/Roboto"""
 
         self.startfield_bg = StarFieldBackground(global_services.get_screen())
 
-        # assets_attributions_object = GameObject(RenderableText(CreditsScene.ASSETS_ATTRIBUTIONS, "assets/fonts/Roboto-Bold.ttf", 18, (255, 255, 255)))
-        # assets_attributions_object.rect.centerx = global_services.get_screen().get_width() / 2
-        # assets_attributions_object.rect.y = 130
         self.add_attributions_to_scene()
 
         self.back_button = Button("Back", None, "assets/NotEnoughEnergy.wav")

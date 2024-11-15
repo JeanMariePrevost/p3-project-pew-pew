@@ -12,8 +12,6 @@ def initial_setup():
     print("Initial setup")
     pygame.init()
     pygame.mixer.init()
-    # change_scene(MainGameScene)
-    # change_scene(MainMenuScene)
     start_scene_transition(None, MainMenuScene, fadeout_ms=0, pause_ms=0, fadein_ms=300)
     print("Initial setup complete")
 

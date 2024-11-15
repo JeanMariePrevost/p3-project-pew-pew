@@ -30,9 +30,10 @@ class HighscoreScene(BaseScene):
 
         self.startfield_bg = StarFieldBackground(global_services.get_screen())
 
-        # TODO: load scores from file, WITH exception handling
-        # TODO: create 1 text element per score, or 1 with line breaks if it's also possible
-        # Could have a slight color difference from top to worst
+        # bgm if not currently playing
+        if pygame.mixer.music.get_busy() == 0:
+            pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")
+            pygame.mixer.music.play(-1)
 
         self.scores = self.read_scores_from_file()
 

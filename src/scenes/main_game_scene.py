@@ -14,6 +14,7 @@ from game.powerup_container import PowerupContainer
 from game.starfield_background import StarFieldBackground
 from global_services import BG_COLOR, get_collision_manager, get_enemy_manager, get_screen, update_current_game_level
 import global_events
+from menu.highscore_scene import HighscoreScene
 from scenes.base_scene import BaseScene
 
 
@@ -66,7 +67,7 @@ class MainGameScene(BaseScene):
         print("Player died, game over!")
         # fade ther music out
         pygame.mixer.music.fadeout(3000)
-        main.start_scene_transition(self, main.MainMenuScene, fadeout_ms=3000, pause_ms=1000, fadein_ms=1000)
+        main.start_scene_transition(self, HighscoreScene, fadeout_ms=3000, pause_ms=1000, fadein_ms=1000)
 
     def trigger_next_wave(self):
         # TODO Implement a more complex wave system
