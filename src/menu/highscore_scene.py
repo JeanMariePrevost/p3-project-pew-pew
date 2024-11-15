@@ -115,9 +115,12 @@ class HighscoreScene(BaseScene):
         return scores
 
     def write_scores_to_file(self):
-        with open("gamedata/highscores.dat", "w") as file:
-            for name, score in self.scores:
-                file.write(f"{name},{score}\n")
+        try:
+            with open("gamedata/highscores.dat", "w") as file:
+                for name, score in self.scores:
+                    file.write(f"{name},{score}\n")
+        except (IOError, OSError) as e:
+            print(f"Failed to write scores to file: {e}")
 
     def on_back_button_clicked(self, button):
         import main
