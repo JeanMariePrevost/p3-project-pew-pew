@@ -23,9 +23,15 @@ class AnimatedRenderable(Renderable):
     def load_asset(self, _):
         """Loads a compelte folder instead"""
         self._frames = []
-        for file in os.listdir(self._asset_folder_path):
-            if file.endswith(".png"):
-                self._frames.append(pygame.image.load(os.path.join(self._asset_folder_path, file)))
+        try:
+            for file in os.listdir(self._asset_folder_path):
+                if file.endswith(".png"):
+                    self._frames.append(pygame.image.load(os.path.join(self._asset_folder_path, file)))
+        except:
+            print(f"Failed to load image folder: {self._asset_folder_path}")
+            # Fallback to a default image, 3 frames to make it visible for at least a few frames and notice it
+            for _ in range(3):
+                self._frames.append(self.get_default_surface())
 
         self._current_frame = 0
         self._ticks_until_next_frame = self._ticks_per_frame

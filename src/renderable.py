@@ -6,6 +6,13 @@ class Renderable:
     Wrapper for visual assets to allow for easier scaling, flashing and the likes
     """
 
+    @classmethod
+    def get_default_surface(cls):
+        """Returns a pink square, used for when an image fails to load"""
+        surface = pygame.Surface((50, 50))
+        surface.fill((255, 0, 255))
+        return surface
+
     def __init__(self, asset_path):
         self._scale_x = 1.0
         self._scale_y = 1.0
@@ -17,7 +24,11 @@ class Renderable:
         self.load_asset(asset_path)
 
     def load_asset(self, asset_path):
-        self._source_image = pygame.image.load(asset_path)
+        try:
+            self._source_image = pygame.image.load(asset_path)
+        except:
+            print(f"Failed to load image: {asset_path}")
+            self._source_image = self.get_default_surface()
         self.set_scale(1.0)
         self.set_tint((255, 255, 255), 0)
 
