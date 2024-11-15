@@ -1,6 +1,8 @@
+from tkinter import messagebox, simpledialog
 import pygame
 from game.game_object import GameObject
 from game.starfield_background import StarFieldBackground
+import global_events
 import global_services
 from menu.button import Button
 from renderable_text import RenderableText
@@ -35,7 +37,28 @@ class HighscoreScene(BaseScene):
             pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")
             pygame.mixer.music.play(-1)
 
+        self.back_button = Button("Back", None, "assets/NotEnoughEnergy.wav")
+        self.back_button.rect.centerx = global_services.get_screen().get_width() / 2
+        self.back_button.rect.y = global_services.get_screen().get_height() - 100 - self.back_button.rect.height
+        self.back_button.clicked_signal.add(self.on_back_button_clicked)
+
+        global_events.tick_signal.add_once(self.add_scores_to_scene)  # HACK: the delay fixes the issue of the scene being reloaded on new highscore
+
+    def add_scores_to_scene(self):
         self.scores = self.read_scores_from_file()
+
+        # DEBUG - print received score
+        received_score = global_services.get_current_game_over_score()
+        print(f"Received score: {received_score}")
+        global_services.set_current_game_over_score(0)
+
+        if received_score > min(score[1] for score in self.scores):
+            print("New highscore!")
+            player_name = HighscoreScene.get_validated_name_from_user()
+
+            self.scores.append((player_name, received_score))
+            self.scores = sorted(self.scores, key=lambda x: x[1], reverse=True)[:10]
+            self.write_scores_to_file()
 
         self.score_objects = []
 
@@ -63,15 +86,19 @@ class HighscoreScene(BaseScene):
 
         self.score_texts = [RenderableText(f"{i + 1}. {score}", "assets/fonts/Roboto-Bold.ttf", 24, (255, 255, 255)) for i, score in enumerate(self.scores)]
 
-        self.back_button = Button("Back", None, "assets/NotEnoughEnergy.wav")
-        self.back_button.rect.centerx = global_services.get_screen().get_width() / 2
-        self.back_button.rect.y = global_services.get_screen().get_height() - 100 - self.back_button.rect.height
-        self.back_button.clicked_signal.add(self.on_back_button_clicked)
+    def get_validated_name_from_user(max_length=10):
+        while True:
+            player_name = simpledialog.askstring("New Highscore!", f"Enter your name (Max {max_length} chars):")
 
-        # DEBUG - print received score
-        received_score = global_services.get_current_game_over_score()
-        print(f"Received score: {received_score}")
-        global_services.set_current_game_over_score(0)
+            # Validate the input
+            if player_name and len(player_name) <= max_length and player_name.replace(" ", "").isalnum():
+                return player_name
+            elif player_name is None:
+                # User canceled the dialog
+                return "AAA"
+            else:
+                # Show an error message if validation fails
+                messagebox.showerror("Invalid Input", f"Name must be alphabetic and up to {max_length} characters.")
 
     def read_scores_from_file(self):
         try:
