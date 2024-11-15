@@ -7,6 +7,7 @@ from menu.credits_scene import CreditsScene
 from menu.highscore_scene import HighscoreScene
 from renderable import Renderable
 from scenes.base_scene import BaseScene
+from scenes.main_game_scene import MainGameScene
 
 
 class MainMenuScene(BaseScene):
@@ -48,7 +49,7 @@ class MainMenuScene(BaseScene):
 
         print("Play button clicked on main menu")
         pygame.mixer.music.stop()
-        main.start_scene_transition(self, main.MainGameScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
+        main.start_scene_transition(self, MainGameScene, fadeout_ms=300, pause_ms=300, fadein_ms=300)
 
     def on_highscores_button_clicked(self, button):
         import main

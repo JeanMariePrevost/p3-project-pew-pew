@@ -5,7 +5,6 @@ import global_events
 from global_services import event_occured_this_tick, get_screen, clock_tick, update_events_for_current_tick, get_current_scene, set_current_scene
 from menu.main_menu_scene import MainMenuScene
 from scenes.base_scene import BaseScene
-from scenes.main_game_scene import MainGameScene
 
 
 def initial_setup():
