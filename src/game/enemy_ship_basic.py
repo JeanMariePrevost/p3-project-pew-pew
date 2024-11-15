@@ -8,6 +8,7 @@ import global_events
 from global_services import get_enemy_manager, get_screen, get_current_game_level
 import random
 
+import global_services
 from renderable import Renderable
 from renderable_flash_wrapper import RenderableFlashWrapper
 
@@ -31,7 +32,7 @@ class EnemyShipBasic(DamageableGameObject):
         self.set_time_for_next_shot()
 
         # Sound effect
-        self.sound = pygame.mixer.Sound("assets/Laser_shoot 123.wav")
+        self.sound = global_services.safe_load_sound("assets/Laser_shoot 123.wav")
         self.sound.set_volume(2)
 
         self.set_collision_types(collision_class=CollisionType.ENEMY, collision_targets=None)

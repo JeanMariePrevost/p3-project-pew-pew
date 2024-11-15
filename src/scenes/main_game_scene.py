@@ -26,9 +26,8 @@ class MainGameScene(BaseScene):
         self._current_level = 1
         self.player_ship = PlayerShip()
         self.bg = StarFieldBackground(get_screen())
-        pygame.mixer.music.load("assets/stg_st008_88pro-loop.ogg")
+        global_services.safe_change_bgm("assets/stg_st008_88pro-loop.ogg")
         pygame.mixer.music.set_volume(0.5)
-        pygame.mixer.music.play(-1)  # -1 means loop indefinitely
 
         global_events.all_enemies_destroyed.add(self.on_all_enemies_destroyed)
         global_events.player_died.add(self.on_player_death)

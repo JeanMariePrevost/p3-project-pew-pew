@@ -3,6 +3,7 @@ import math
 import pygame
 
 from game.game_object import GameObject
+import global_services
 from renderable import Renderable
 
 
@@ -27,7 +28,7 @@ class Projectile(GameObject):
             self.damage = 1
 
         # Currently hard-coded impact sound
-        self.impact_sound = pygame.mixer.Sound("assets/HitTheGround_edit.wav")
+        self.impact_sound = global_services.safe_load_sound("assets/HitTheGround_edit.wav")
         self.impact_sound.set_volume(0.5)
 
         super().__init__(Renderable(image_asset_path))

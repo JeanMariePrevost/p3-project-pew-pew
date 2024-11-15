@@ -3,6 +3,7 @@ import pygame
 from game.player_projectile_regular import PlayerProjectileRegular
 from game.powerup import Powerup
 import global_events
+import global_services
 
 
 class PlayerWeaponBasic:
@@ -17,7 +18,7 @@ class PlayerWeaponBasic:
         self.seconds_betwen_shots = 0.4
         self.time_at_last_shot = 0
         self.level = 1
-        self.sound = pygame.mixer.Sound("assets/MiniShot2.wav")
+        self.sound = global_services.safe_load_sound("assets/MiniShot2.wav")
         self.sound.set_volume(0.4)
         self._next_weapon_class = PlayerWeaponBasic2
         self._previous_weapon_class = None

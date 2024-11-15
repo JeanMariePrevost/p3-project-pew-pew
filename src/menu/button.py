@@ -10,7 +10,7 @@ class Button(GameObject):
     def __init__(self, text: str, renderable: Renderable, click_sound_path=None):
         super().__init__(Renderable("assets/button_bg.png"))
         self.text_renderable = RenderableText(text, "assets/fonts/Roboto-Bold.ttf", 24, (255, 255, 255))
-        self.click_sound = pygame.mixer.Sound(click_sound_path) if click_sound_path is not None else None
+        self.click_sound = global_services.safe_load_sound(click_sound_path) if click_sound_path is not None else None
         self.hovered_by_mouse = False
         self.held_down = False
         self.clicked_signal = Signal()

@@ -34,8 +34,7 @@ class HighscoreScene(BaseScene):
 
         # bgm if not currently playing
         if pygame.mixer.music.get_busy() == 0:
-            pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")
-            pygame.mixer.music.play(-1)
+            global_services.safe_change_bgm("assets/stg_theme007_88pro-loop.ogg")
 
         self.back_button = Button("Back", None, "assets/NotEnoughEnergy.wav")
         self.back_button.rect.centerx = global_services.get_screen().get_width() / 2

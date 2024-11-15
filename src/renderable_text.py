@@ -14,7 +14,11 @@ class RenderableText(Renderable):
         self.refresh_font()
 
     def refresh_font(self):
-        self.font = pygame.font.Font(self.font, self.font_size)
+        try:
+            self.font = pygame.font.Font(self.font, self.font_size)
+        except FileNotFoundError:
+            print(f"Font file not found: {self.font}")
+            self.font = pygame.font.Font(None, self.font_size)
         self.refresh_final_image()
 
     def set_font_size(self, font_size: int):

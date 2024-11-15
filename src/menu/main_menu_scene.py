@@ -41,8 +41,7 @@ class MainMenuScene(BaseScene):
 
         # bgm if not currently playing
         if pygame.mixer.music.get_busy() == 0:
-            pygame.mixer.music.load("assets/stg_theme007_88pro-loop.ogg")
-            pygame.mixer.music.play(-1)
+            global_services.safe_change_bgm("assets/stg_theme007_88pro-loop.ogg")
 
     def on_play_button_clicked(self, button):
         import main

@@ -1,4 +1,3 @@
-import os
 import pygame
 from animated_renderable import AnimatedRenderable
 from game.collision_type_set import CollisionType, CollisionTypeSet
@@ -24,8 +23,8 @@ class PlayerShip(GameObject):
         self.set_collision_types(collision_class=CollisionType.PLAYER, collision_targets=CollisionTypeSet(CollisionType.ENEMY))
 
         self.exhaust_plume = PlayerExhaustPlume(self)
-        self.sound_take_damage = pygame.mixer.Sound("assets/SpaceGunFire.wav")
-        self.sound_death = pygame.mixer.Sound("assets/MissileLaunch.wav")
+        self.sound_take_damage = global_services.safe_load_sound("assets/SpaceGunFire.wav")
+        self.sound_death = global_services.safe_load_sound("assets/MissileLaunch.wav")
 
         global_services.set_player(self)
         global_events.player_took_damage.add(self.on_player_took_damage)

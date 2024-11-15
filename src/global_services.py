@@ -31,6 +31,22 @@ __clock = pygame.time.Clock()
 __current_tick_events = None
 
 
+def safe_load_sound(file_path) -> pygame.mixer.Sound:
+    try:
+        return pygame.mixer.Sound(file_path)
+    except FileNotFoundError as e:
+        print(f"Error loading sound file '{file_path}': {e}")
+        return pygame.mixer.Sound(buffer=bytearray())
+
+
+def safe_change_bgm(file_path):
+    try:
+        pygame.mixer.music.load(file_path)
+        pygame.mixer.music.play(-1)
+    except:
+        print(f"Error loading music file '{file_path}'")
+
+
 def get_screen():
     """Return the main display surface."""
     return __screen
