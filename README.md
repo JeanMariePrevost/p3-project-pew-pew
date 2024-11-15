@@ -26,7 +26,7 @@ Proper balance and deep progression and systems were all beyond the scope of thi
 
 Check out a short demo of the project:
 
-<a href="https://www.youtube.com/watch?v=Kg-dZmnYRIs">
+<a href="https://www.youtube.com/watch?v=IrZNGcxVJSw">
     <img src="https://raw.githubusercontent.com/JeanMariePrevost/p3-project-pew-pew/main/screenshots/youtube_thumbnail.jpg" alt="Watch the Demo Video" height="300">
 </a>
 

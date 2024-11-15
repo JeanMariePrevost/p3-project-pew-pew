@@ -15,7 +15,7 @@ class GameObject:
         self.rect = self.renderable.get_rect()
         self.hit_mask = self.renderable.get_collision_mask()
         self.was_destroyed = False
-        self._draw_signal_priority = 0
+        self._draw_signal_priority = 0 if not hasattr(self, "_draw_signal_priority") else self._draw_signal_priority
         if not hasattr(self, "collision_class"):
             self.__collision_class = CollisionTypeSet()  # By default, a GameObject won't be collidable with anything
 

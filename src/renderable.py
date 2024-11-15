@@ -7,7 +7,8 @@ class Renderable:
     """
 
     def __init__(self, asset_path):
-        self._scale = 1.0
+        self._scale_x = 1.0
+        self._scale_y = 1.0
         self._rotation = 0
         self._tint = (255, 255, 255)
         self._tint_alpha = 0
@@ -21,7 +22,11 @@ class Renderable:
         self.set_tint((255, 255, 255), 0)
 
     def set_scale(self, scale):
-        self._scale = scale
+        self.set_scale_non_uniform(scale, scale)
+
+    def set_scale_non_uniform(self, scale_x, scale_y):
+        self._scale_x = scale_x
+        self._scale_y = scale_y
         self.refresh_final_image()
         self.update_collision_mask()
 
@@ -43,8 +48,11 @@ class Renderable:
     def get_rect(self):
         return self._final_image.get_rect()
 
-    def get_scale(self):
-        return self._scale
+    def get_scale_x(self):
+        return self._scale_x
+
+    def get_scale_y(self):
+        return self._scale_y
 
     def set_tint(self, color_rgb, alpha):
         self._tint = color_rgb
@@ -58,7 +66,7 @@ class Renderable:
         self._final_image.set_alpha(self._alpha)
 
     def get_scaled_version_of(self, image):
-        return pygame.transform.scale(image, (int(image.get_width() * self._scale), int(image.get_height() * self._scale)))
+        return pygame.transform.scale(image, (int(image.get_width() * self._scale_x), int(image.get_height() * self._scale_y)))
 
     def get_tinted_version_of(self, image):
         # HACK: applies it to the image directly, side effect, doesn't matter for now
